@@ -1,7 +1,7 @@
 import React from 'react';
 import PokemonCardComponent from '../components/PokemonCardComponent'
 
-export async function getPokemons() {
+async function getPokemons() {
   const url = `${process.env.POKEMON_API_URL}pokedex/2`;
   
   const getPokemonsResponse = await fetch(url, {next: {revalidate: false}});
@@ -21,7 +21,7 @@ export async function getPokemons() {
   return pokemonEntries;
 }
 
-export async function getPokemonById(pokemonId : bigint): Promise<any> {
+async function getPokemonById(pokemonId : bigint): Promise<any> {
 
   const url = `${process.env.POKEMON_API_URL}pokemon/${pokemonId}`;
   const res = await fetch(url, {next: {revalidate: false}});

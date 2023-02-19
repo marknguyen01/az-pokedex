@@ -1,5 +1,5 @@
 import React from 'react';
-import PokemonCardComponent from '../components/PokemonCardComponent'
+import PokemonCardComponent from '../components/PokemonCardComponent';
 
 async function getPokemons() {
   const url = `${process.env.POKEMON_API_URL}pokedex/2`;
@@ -35,6 +35,7 @@ async function getPokemonById(pokemonId : bigint): Promise<any> {
 export default async function Home() {
   const pokemonList = await getPokemons();
   pokemonList.sort((a, b) => a.id - b.id);
+
   return (
     <main className="container mx-auto p-6">
       <div className="pokedex_search grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-2 xl:grid-cols-6 xl:gap-3">

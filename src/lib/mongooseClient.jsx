@@ -9,14 +9,14 @@ if(!cached) {
 if (!process.env.MONGODB_URI) {
     throw new Error('Please add your Mongo URI to .env.local')
 }
-if (!process.env.MONGDB_DATABSE) {
+if (!process.env.MONGODB_DATABASE) {
     throw new Error('Please add your Mongo URI to .env.local')
 }
 
 if(process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test") {
     database = 'test';
 } else {
-    database = process.env.MONGDB_DATABSE;
+    database = process.env.MONGODB_DATABASE;
 }
 
 export default async function mongooseClient() {

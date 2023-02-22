@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
     
 let cached = global.mongoose;
-let database;
+let database = 'az-pokedex';
 
 if(!cached) {
     cached = global.mongoose = { conn: null, promise: null }
@@ -9,15 +9,13 @@ if(!cached) {
 if (!process.env.MONGODB_URI) {
     throw new Error('Please add your Mongo URI to .env.local')
 }
-if (!process.env.MONGODB_DATABASE) {
-    throw new Error('Please add your Mongo URI to .env.local')
-}
 
 if(process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test") {
     database = 'test';
 } else {
-    database = process.env.MONGODB_DATABASE;
+    database = process.env.MONGODB_DATABASE && process.env.MONGODB_DATABASE;
 }
+
 
 export default async function mongooseClient() {
     if (cached.conn) {
@@ -41,6 +39,6 @@ export default async function mongooseClient() {
         cached.promise = null
         throw e
     }
-
+    console.log("Connection to DB established successfully!");
     return cached.conn
 }

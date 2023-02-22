@@ -1,30 +1,41 @@
-import next, { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 import moongooseClient from '../../../../lib/mongooseClient';
 import Pokemon from '../../../../models/Pokemon';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    await moongooseClient();
+    // The intention is to run this test env where you have more resources to scrap the data
+    // Disable this in prod if your server can't handle the work load
+    if(!process.env.DISABLE_ADMIN_SCRAP_IN_PROD) {
+        await moongooseClient();
 
-    const pokemonList = await getPokemons();
+        const pokemonList = await getPokemons();
+        
+        const bulkOps = pokemonList.map(pokemon => ({
+            updateOne: {
+                filter: {_id: pokemon.id},
+                update: pokemon,
+                upsert: true,
+            }
+        }));
     
-    const bulkOps = pokemonList.map(pokemon => ({
-        updateOne: {
-            filter: {_id: pokemon.id},
-            update: pokemon,
-            upsert: true,
-        }
-    }));
-
-    Pokemon.bulkWrite(bulkOps).then(result => {
-        res.status(200).json({
-            success: true,
-        })
-    }).catch(err => next(err));
+        Pokemon.bulkWrite(bulkOps).then(result => {
+            res.json({
+                success: true,
+            })
+            res.status(200).end();
+        }).catch(err => {
+            console.log(err);
+            res.json({
+                success: false,
+            });
+            res.status(400).end();
+        });
+    }
 }
 
 async function getPokemons() {
-    const url = `${process.env.POKEMON_API_URL}pokedex/2`;
+    const url = `${process.env.POKEMON_API_URL}pokedex/1`;
     
     const getPokemonsResponse = await fetch(url, {next: {revalidate: false}});
   

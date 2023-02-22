@@ -1,12 +1,10 @@
-import './globals.css'
-import mongooseClient from '../lib/mongooseClient'
+import './globals.scss'
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  await mongooseClient();
   return (
     <html lang="en">
       {/*

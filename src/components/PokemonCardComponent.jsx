@@ -88,7 +88,7 @@ export default function PokemonCardComponent({pokemons}) {
                             <div className='pokemon-card__abilities card-actions justify-start overflow-y-auto h-12'>
                                 { pokemon.abilities.map(ability => ability.ability.name)
                                 .filter((value, index, self) => self.indexOf(value) === index).map(ability => (
-                                    <div className={`pokemon-card__ability overflow-clip capitalize text-center badge badge-outline`}>
+                                    <div className={`pokemon-card__ability overflow-clip capitalize text-center badge badge-outline`} key={ability}>
                                         {ability.replaceAll('-', ' ')}
                                     </div>    
                                 ))}

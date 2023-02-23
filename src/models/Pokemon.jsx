@@ -70,4 +70,4 @@ const pokemonSchema = new mongoose.Schema({
     types: [typeSchema],
 })
 
-export default mongoose.models.Pokemon || mongoose.model('Pokemon', Pokemon);
+export default mongoose.models.Pokemon || mongoose.model('Pokemon', pokemonSchema);

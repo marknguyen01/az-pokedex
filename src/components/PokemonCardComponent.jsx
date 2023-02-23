@@ -35,7 +35,7 @@ function createTypeBackground(types) {
 export default function PokemonCardComponent({pokemons}) {
     const pokemonsJSON = JSON.parse(pokemons);
     return (
-        <div className='pokedex_search grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-2 xl:grid-cols-6 xl:gap-3'>
+        <div className='pokedex_search grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6'>
             { pokemonsJSON.map((pokemon) => (
                 <div className="pokemon-card card bg-base-100 shadow-md" key={pokemon._id}>
                     <figure className='pokemon-card_img py-10' style={createTypeBackground(pokemon.types)}>

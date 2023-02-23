@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image'
 
 function createTypeBackground(types) {
     const typesMap = new Map([
@@ -67,7 +68,9 @@ export default function PokemonCardComponent({pokemons}) {
             { pokemonsJSON.map((pokemon) => (
                 <div className="pokemon-card card bg-base-100 shadow-md h-128" key={pokemon._id}>
                     <figure className='pokemon-card_img h-24 mb-10' style={createTypeBackground(pokemon.types)}>
-                        <img className='w-32 h-32 absolute top-6' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} alt={pokemon.name} />
+                        <div className='w-32 h-32 absolute top-6'>
+                            <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} alt={pokemon.name} width={128} height={128} />
+                        </div>
                         <div className='pokemon-card_types flex justify-center my-2'>
                             { pokemon.types.map((type, index) => 
                                 <div 

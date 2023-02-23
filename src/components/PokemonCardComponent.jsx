@@ -60,11 +60,10 @@ function changeStatOrder(stat) {
     return 'lg:order-' + statOrderMap.get(stat).toString();
 }
 
-export default function PokemonCardComponent({pokemons}) {
-    const pokemonsJSON = JSON.parse(pokemons);
+export default function PokemonCardComponent(props) {
     return (
         <div className='pokedex_search grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 lg:grid-cols-6 lg:gap-3'>
-            { pokemonsJSON.map((pokemon) => (
+            { props.pokemons.map((pokemon) => (
                 <div className="pokemon-card card bg-base-100 shadow-md h-128" key={pokemon._id}>
                     <figure className='pokemon-card_img h-24 mb-10' style={createTypeBackground(pokemon.types)}>
                         <div className='w-32 h-32 absolute top-6'>
@@ -78,6 +77,7 @@ export default function PokemonCardComponent({pokemons}) {
                                 <div 
                                     key={type.type.name}
                                     className={`pokemon-card_type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
+                                    onClick={(e) => {props.filterPokemons(type.type.name, 'types')}}
                                 >{ type.type.name }</div>
                             )}
                         </div>

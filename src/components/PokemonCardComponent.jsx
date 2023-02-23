@@ -60,7 +60,6 @@ function changeStatOrder(stat) {
     return 'lg:order-' + statOrderMap.get(stat).toString();
 }
 
-
 export default function PokemonCardComponent({pokemons}) {
     const pokemonsJSON = JSON.parse(pokemons);
     return (
@@ -69,7 +68,10 @@ export default function PokemonCardComponent({pokemons}) {
                 <div className="pokemon-card card bg-base-100 shadow-md h-128" key={pokemon._id}>
                     <figure className='pokemon-card_img h-24 mb-10' style={createTypeBackground(pokemon.types)}>
                         <div className='w-32 h-32 absolute top-6'>
-                            <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} alt={pokemon.name} width={128} height={128} />
+                            <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
+                            alt={pokemon.name} width={128} height={128}
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgAgMAAACf9p+rAAAADFBMVEUAAAC9vb3m5ub///8UsA9cAAAAAXRSTlMAQObYZgAAAPZJREFUSMft1EEOgyAQBVATDsCRPIWb9gbtwlN1w8YjlMt04Y5tCZEiijLDTEJi0rSJs3DhC4xj4DfNWf9W0ntDvRc+lCbAxyI3msswC8olMgFe0iZwzE54L7GDplvgJu0OjmkBm4gcNGxhVawnbBJg7GINEELv1wI97M6Cz8FXgICgEdyUepDQr48MJAQDYJxno8DOfwPD9tMXcIdhSnNgsGlyDO9vwUDCJZ4SAq74LEoI5gAICBqB7e40TGoojjsEfG+2rfBNS81dDcgcTA2IHDS+zumrigBY53B1kcGGDBtLfJCx0ceGJR+vbCDzEc6G/lk/XR8gtJNFwkBaRQAAAABJRU5ErkJggg==" />
                         </div>
                         <div className='pokemon-card_types flex justify-center my-2'>
                             { pokemon.types.map((type, index) => 

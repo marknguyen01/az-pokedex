@@ -140,8 +140,6 @@ $types:
   &_type {
     text-shadow: 1px 1px 2px rgb(0 0 0 / 70%);
     transition: opacity 1s;
-    width: 66px;
-    border: 1px solid rgba(0,0,0,.2);
     font-size: .75rem;
     font-weight: normal;
     line-height: 1.5rem;
@@ -151,16 +149,12 @@ $types:
     &:hover {
       opacity: 0.5;
     }
-
-    @each $name, $color in $types {
-      &--#{$name} {
-        background-color: #{$color};
-      }
-    }
+  }
+  &_img {
+    border-bottom-left-radius: 100% 40%;
+    border-bottom-right-radius: 100% 40%;
   }
   &_id {
-    left: calc(50% - 25px);
-    width: 50px;
     text-shadow: 1px 1px 2px rgb(0 0 0 / 70%);
   }
 }

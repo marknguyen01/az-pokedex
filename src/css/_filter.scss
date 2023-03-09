@@ -1,0 +1,13 @@
+.filter {
+    @apply flex flex-row mb-24 gap-5 flex-wrap;
+    
+    &__select-wrapper {
+        @apply px-6 py-3 rounded-xl overflow-hidden;
+        width: 200px;
+        background-color: $accent-bg-color;
+
+        select {
+            @apply w-full capitalize outline-none;
+        }
+    }
+}

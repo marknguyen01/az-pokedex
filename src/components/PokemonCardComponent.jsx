@@ -62,10 +62,10 @@ function changeStatOrder(stat) {
 
 export default function PokemonCardComponent(props) {
     return (
-        <div className='pokedex_search grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 lg:grid-cols-6 lg:gap-3'>
+        <div className='pokemon-cards'>
             { props.pokemons.map((pokemon, index) => (
-                <div className="pokemon-card card bg-base-100 shadow-md h-128" key={pokemon._id}>
-                    <figure className='pokemon-card_img h-24 mb-10' style={createTypeBackground(pokemon.types)}>
+                <div className="pokemon-card" key={pokemon._id}>
+                    <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <div className='w-32 h-32 absolute top-6'>
                             { process.env.POKEMON_IMG_LAZY_LOAD_LIMIT && index < process.env.POKEMON_IMG_LAZY_LOAD_LIMIT ?
                                 <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
@@ -76,24 +76,24 @@ export default function PokemonCardComponent(props) {
                                 alt={pokemon.name} width={128} height={128} />
                             }
                         </div>
-                        <div className='pokemon-card_types flex justify-center my-2'>
+                        <div className='pokemon-card__types flex justify-center my-2'>
                             { pokemon.types.map((type, index) => 
                                 <div 
                                     key={type.type.name}
-                                    className={`pokemon-card_type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
+                                    className={`pokemon-card__type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
                                     onClick={(e) => {props.filterPokemons(type.type.name, 'types')}}
                                 >{ type.type.name }</div>
                             )}
                         </div>
-                        <div className='pokemon-card_id backdrop-opacity-80 text-white bg-white/30 text-center absolute rounded top-2 left-1/2 transform -translate-x-1/2 px-1'>
-                            {pokemon._id}
-                        </div>
                     </figure>
-                    <div className='pokemon-card_body p-4'>
-                        <h1 className='pokemon-card_name flex justify-center capitalize font-semibold'>
+                    <div className='pokemon-card__body p-4'>
+                        <div className='pokemon-card__id'>
+                            N&deg;{pokemon._id}
+                        </div>
+                        <div className='pokemon-card__name'>
                             {pokemon.name.replaceAll('-', ' ')}
-                        </h1>
-                        <div className='pokemon-card_details mt-3'>
+                        </div>
+                        <div className='pokemon-card__details mt-3'>
                             <div className='pokemon-card__abilities card-actions justify-start overflow-y-auto h-12'>
                                 { pokemon.abilities.map(ability => ability.ability.name)
                                 .filter((value, index, self) => self.indexOf(value) === index).map(ability => (
@@ -105,7 +105,7 @@ export default function PokemonCardComponent(props) {
                         </div>
                         
 
-                        <div className='pokemon-card_details mt-3'>
+                        <div className='pokemon-card__details mt-3'>
                             <div className='pokemon-card__stats grid grid-cols-1 gap-1 lg:grid-cols-2'>
                                 { pokemon.stats.map((stat) => (
                                     <div className={`pokemon-card__stat uppercase text-center inline-block ${changeStatOrder(stat.stat.name)}`} key={stat.stat.name}>

@@ -12,15 +12,13 @@ export default function SearchBarComponent(props) {
     }
 
     return(
-        <form className="search-bar my-6 w-full" onSubmit={handleSubmit}>
-            <div className="search-bar__container form-control">
-                <div className="search-bar__bar input-group input-group-lg">
-                    <input type="text" placeholder="What are you searching?" className="search-bar__input w-full input input-lg input-bordered focus:outline-none" 
-                        onChange={(e) => setSearchTerms(e.target.value)}/>
-                    <button className="search-bar__button btn btn-square btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
-                </div>
+        <form className="search-bar" onSubmit={handleSubmit}>
+            <div className="search-bar__container">
+                <input type="text" placeholder="Search your Pokemon!" className="search-bar__input" 
+                    onChange={(e) => setSearchTerms(e.target.value)}/>
+                <button className="search-bar__button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pokeball" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <circle cx="9" cy="9" r="9" transform="translate(3 3)" /> <circle cx="12" cy="12" r="3" /> <path d="M3 12h6m6 0h6" /> </svg>                    
+                </button>
             </div>
         </form>
     )

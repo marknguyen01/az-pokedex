@@ -4,10 +4,11 @@ import React, { useState, createContext, useEffect } from 'react';
 
 import PokemonCardComponent from '../components/PokemonCardComponent';
 import SearchBarComponent from '../components/SearchBarComponent';
+import FilterComponent from './FilterComponent';
 
 export const PokemonContext = createContext();
 
-const HomepageComponent = ({pokemons}) => {
+const HomepageComponent = ({pokemons, types}) => {
     const pokemonsObj = JSON.parse(pokemons);
     const [pokemonList, setPokemonList] = useState(pokemonsObj);
     const [previousSearchTerm, setPreviousSearchTerm] = useState('');
@@ -49,6 +50,7 @@ const HomepageComponent = ({pokemons}) => {
     return(
         <>
             <SearchBarComponent filterPokemons={filterPokemons}></SearchBarComponent>
+            <FilterComponent types={JSON.parse(types)}></FilterComponent>
             <PokemonCardComponent pokemons={pokemonList} filterPokemons={filterPokemons} updateSearchCategoryState={updateSearchCategoryState}></PokemonCardComponent>
         </>
     )

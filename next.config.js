@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
+    appDir: false,
   },
   env: {
     POKEMON_API_URL: 'https://pokeapi.co/api/v2/',

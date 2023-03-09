@@ -1,0 +1,40 @@
+$primary-bg-color:  #F6F8FC;
+$accent-bg-color: #FFFFFF;
+
+$primary-text-color: #000000;
+$accent-text-color: #BBBBCD;
+$red-color: #ff534f;
+
+
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";
+
+@import "searchBar";
+@import "filter";
+@import "pokemonCard";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: $primary-bg-color;
+  color: $primary-text-color;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+@function type-gradient($firstColor, $secondColor) {
+
+}

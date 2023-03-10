@@ -34,7 +34,7 @@ const HomepageComponent = ({pokemons, types}) => {
                 // If search term is just a number, filter by pokemon id
                 if(searchTerm && !isNaN(parseInt(searchTerm))) {
                     results = pokemonData.filter((pokemon) => {
-                        return pokemon._id == searchTerm
+                        return pokemon._id.toString().includes(searchTerm) || pokemon.name.includes(searchTerm);
                     });
                     setPreviousSearchFilter(searchTerm);
                 } else {

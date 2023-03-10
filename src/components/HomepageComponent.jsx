@@ -9,6 +9,7 @@ const HomepageComponent = ({pokemons, types}) => {
     const pokemonData = JSON.parse(pokemons);
     const typeData = JSON.parse(types);
     const [finalResults, setFinalResults] = useState(pokemonData);
+    const [isLoadingCards, setLoadingCards] = useState(true);
 
     const [previousSearchTerm, setPreviousSearchTerm] = useState('');
     const [typeFilter, setTypeFilter] = useState('');
@@ -16,6 +17,7 @@ const HomepageComponent = ({pokemons, types}) => {
     const [abilityFilter, setAbilityFilter] = useState('');
 
     const searchPokemons = (searchTerm, searchTypeFilter = '', searchWeaknessFilter = '', searchAbilityFilter = '') => {
+        setLoadingCards(true);
         let results = {};
         // Only run search again if one of the setting is changed
         if(!(searchTerm === previousSearchTerm && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
@@ -64,6 +66,8 @@ const HomepageComponent = ({pokemons, types}) => {
         <PokemonDataContext.Provider value={{
             pokemonData, typeData, 
             finalResults, setFinalResults,
+            isLoadingCards, setLoadingCards,
+            
             previousSearchTerm, setPreviousSearchTerm, 
             typeFilter, setTypeFilter,
             weaknessFilter, setWeaknessFilter,

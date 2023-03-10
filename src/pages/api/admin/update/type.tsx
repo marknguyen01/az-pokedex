@@ -38,14 +38,14 @@ async function getTypes() {
 
     try {
         await api.get().json(async response  => {
-            await Promise.all(response.results.map(async (entry) =>
+            await Promise.all(response.results.map(async (entry:any) =>
                 await api.get(`/${entry.name}`).json(json2 => {
                     typeEntries.push(json2)
                 })
             )).catch((error) => new Error("Fetch error: " + error));
         }).catch((error) => new Error("Fetch error: " + error));
 
-    } catch (error) {
+    } catch (error:any) {
         const message =
         typeof error.message === "object" && Object.keys(error.message).length > 0
           ? JSON.stringify(error.message)

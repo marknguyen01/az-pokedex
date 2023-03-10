@@ -1,8 +1,9 @@
 'use client';
 
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import Image from 'next/image'
 import { PokemonDataContext } from '../context/PokemonDataContext';
+import LoadingComponent from './LoadingComponent';
 
 function createTypeBackground(types) {
     const typesMap = new Map([
@@ -62,11 +63,15 @@ function changeStatOrder(stat) {
 }
 
 export default function PokemonCardComponent(props) {
-
-    const {finalResults, previousSearchTerm, searchPokemons} = useContext(PokemonDataContext);
+    const {finalResults, isLoadingCards, setLoadingCards, previousSearchTerm, searchPokemons} = useContext(PokemonDataContext);
+    
+    useEffect(() => {
+        setLoadingCards(false);
+    });
+    
     return (
         <div className='pokemon-cards'>
-            { finalResults.map((pokemon, index) => (
+            { isLoadingCards ? <LoadingComponent /> : finalResults.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <div className='w-32 h-32 absolute top-6'>

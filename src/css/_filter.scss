@@ -13,6 +13,8 @@
             border: 1px solid #8F9396;
             & > .filter__select-dropdown {
                 opacity: 1;
+                z-index: 50;
+                visibility: visible;
             }
         }
 
@@ -34,7 +36,7 @@
         height: 300px;
         transition: opacity 0.5s ease;
         background-color: $accent-bg-color;
-        z-index: 50;
+        visibility: hidden;
 
         &__option {
             @apply px-3 py-1 rounded-xl;

@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 export default function FilterComponent() {
     const [openDropdown, setOpenDropdown] = useState('');
     const [isToggleDropdown, setToggleDropdown] = useState(false);
-    const {typeData, typeFilter, weaknessFilter, searchPokemons, previousSearchTerm} = useContext(PokemonDataContext);
+    const {typeData, typeFilter, weaknessFilter, searchPokemons, previousSearchFilter} = useContext(PokemonDataContext);
 
     const toggleDropDown = (name) => {
         setOpenDropdown(name);
@@ -21,13 +21,13 @@ export default function FilterComponent() {
                 <div className={`filter__select-dropdown ${isDropdownDisplayed('types') ? 'active--types' : ''}`}>
                 <div 
                 className={`filter__select-dropdown__option ${typeFilter === '' ? 'active--all' : ''}`}
-                onClick={(e) => {searchPokemons(previousSearchTerm)}}
+                onClick={(e) => {searchPokemons(previousSearchFilter)}}
                 >All</div>
                     {typeData.map((type) => (
                         <div 
                         className={`filter__select-dropdown__option ${typeFilter == type.name ? 'active--' + typeFilter : ''}`}  
                         key={type._id}
-                        onClick={(e) => {searchPokemons(previousSearchTerm, type.name)}}
+                        onClick={(e) => {searchPokemons(previousSearchFilter, type.name)}}
                         >{type.name}</div>
                     ))}
                 </div>

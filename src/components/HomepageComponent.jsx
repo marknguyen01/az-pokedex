@@ -11,7 +11,8 @@ const HomepageComponent = ({pokemons, types}) => {
     const [finalResults, setFinalResults] = useState(pokemonData);
     const [isLoadingCards, setLoadingCards] = useState(true);
 
-    const [previousSearchTerm, setPreviousSearchTerm] = useState('');
+    const [previousSearchFilter, setPreviousSearchFilter] = useState('');
+    const [searchFilter, setSearchFilter] = useState('');
     const [typeFilter, setTypeFilter] = useState('');
     const [weaknessFilter, setWeaknessFilter] = useState('');
     const [abilityFilter, setAbilityFilter] = useState('');
@@ -20,13 +21,14 @@ const HomepageComponent = ({pokemons, types}) => {
         setLoadingCards(true);
         let results = {};
         // Only run search again if one of the setting is changed
-        if(!(searchTerm === previousSearchTerm && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
+        if(!(searchTerm === previousSearchFilter && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
             && searchAbilityFilter === abilityFilter)) {
             // If all settings are default, return the full list
             if(searchTerm === '' && searchTypeFilter === '' && searchWeaknessFilter === '' && searchAbilityFilter === '') {
                 results = pokemonData;
                 setTypeFilter('');
-                setPreviousSearchTerm('');
+                setSearchFilter('');
+                setPreviousSearchFilter('');
             }
             else {
                 // If search term is just a number, filter by pokemon id
@@ -43,7 +45,7 @@ const HomepageComponent = ({pokemons, types}) => {
                         return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
                     });
                 }
-                setPreviousSearchTerm(searchTerm);
+                setPreviousSearchFilter(searchTerm);
     
     
                 if(searchTypeFilter !== '') {
@@ -67,8 +69,8 @@ const HomepageComponent = ({pokemons, types}) => {
             pokemonData, typeData, 
             finalResults, setFinalResults,
             isLoadingCards, setLoadingCards,
-            
-            previousSearchTerm, setPreviousSearchTerm, 
+            previousSearchFilter, setPreviousSearchFilter,
+            searchFilter, setSearchFilter, 
             typeFilter, setTypeFilter,
             weaknessFilter, setWeaknessFilter,
             searchPokemons,

@@ -31,7 +31,7 @@
     }
 
     &__select-dropdown {
-        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-14;
+        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-12;
         opacity: 0;
         height: 300px;
         transition: opacity 0.5s ease;

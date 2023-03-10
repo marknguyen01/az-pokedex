@@ -96,7 +96,7 @@ export default function PokemonCardComponent(props) {
                         <div className='pokemon-card__name'>
                             {pokemon.name.replaceAll('-', ' ')}
                         </div>
-                        <div className='pokemon-card__details mt-3'>
+                        {/* <div className='pokemon-card__details mt-3'>
                             <div className='pokemon-card__abilities card-actions justify-start overflow-y-auto h-12'>
                                 { pokemon.abilities.map(ability => ability.ability.name)
                                 .filter((value, index, self) => self.indexOf(value) === index).map(ability => (
@@ -117,7 +117,7 @@ export default function PokemonCardComponent(props) {
                                     </div>    
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             ))}

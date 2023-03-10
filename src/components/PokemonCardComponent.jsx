@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import {useContext} from 'react';
 import Image from 'next/image'
+import { PokemonDataContext } from '../context/PokemonDataContext';
 
 function createTypeBackground(types) {
     const typesMap = new Map([
@@ -61,9 +62,11 @@ function changeStatOrder(stat) {
 }
 
 export default function PokemonCardComponent(props) {
+
+    const {finalResults, previousSearchTerm, searchPokemons} = useContext(PokemonDataContext);
     return (
         <div className='pokemon-cards'>
-            { props.pokemons.map((pokemon, index) => (
+            { finalResults.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <div className='w-32 h-32 absolute top-6'>
@@ -81,7 +84,7 @@ export default function PokemonCardComponent(props) {
                                 <div 
                                     key={type.type.name}
                                     className={`pokemon-card__type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
-                                    onClick={(e) => {props.filterPokemons(type.type.name, 'types')}}
+                                    onClick={(e) => {searchPokemons(previousSearchTerm, type.type.name)}}
                                 >{ type.type.name }</div>
                             )}
                         </div>

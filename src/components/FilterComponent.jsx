@@ -1,29 +1,57 @@
-import typeData from "../data/typeData"
+import { PokemonDataContext } from '../context/PokemonDataContext';
+import { useContext, useState } from "react";
 
+export default function FilterComponent() {
+    const [openDropdown, setOpenDropdown] = useState('');
+    const [isToggleDropdown, setToggleDropdown] = useState(false);
+    const {typeData, typeFilter, weaknessFilter, searchPokemons, previousSearchTerm} = useContext(PokemonDataContext);
 
-export default function FilterComponent(props) {
+    const toggleDropDown = (name) => {
+        setOpenDropdown(name);
+        setToggleDropdown(!isToggleDropdown);
+    }
+    const isDropdownDisplayed = (name) => {
+        return isToggleDropdown && openDropdown === name;
+    }
+
     return (
         <div className="filter">
-            <div class="filter__select-wrapper">
-                <select className="select">
-                    <option disabled selected>Type</option>
-                    {props.types.map((type) => (
-                        <option value={type.name} key={type._id} name={`type-${type.name}`}>{type.name}</option>
+            <div className={`filter__select-wrapper ${typeFilter === '' ? 'active--all' : 'active--' + typeFilter}`} onClick={(e) => toggleDropDown('types')}>
+                <div className='filter__select-title'>{ typeFilter === '' ? 'Types: All' : 'Types: ' + typeFilter}</div>
+                <div className={`filter__select-dropdown ${isDropdownDisplayed('types') ? 'active--types' : ''}`}>
+                <div 
+                className={`filter__select-dropdown__option ${typeFilter === '' ? 'active--all' : ''}`}
+                onClick={(e) => {searchPokemons(previousSearchTerm)}}
+                >All</div>
+                    {typeData.map((type) => (
+                        <div 
+                        className={`filter__select-dropdown__option ${typeFilter == type.name ? 'active--' + typeFilter : ''}`}  
+                        key={type._id}
+                        onClick={(e) => {searchPokemons(previousSearchTerm, type.name)}}
+                        >{type.name}</div>
                     ))}
-                </select>
+                </div>
             </div>
-            <div class="filter__select-wrapper">
-                <select className="select">
-                    <option disabled selected>Weakness</option>
-                    {props.types.map((type) => (
-                        <option value={type.name} key={type._id} name={`weakness-${type.name}`}>{type.name}</option>
+            {/* <div className="filter__select-wrapper" onClick={(e) => toggleDropDown('weakness')}>
+                <div>{ !(typeFilter in typeData) ? 'Weaknesses: All' : 'Weaknesses: ' + weaknessFilter}</div>
+                <div className={`filter__select-dropdown ${isDropdownDisplayed('weakness') ? 'active--weakness' : ''}`}>
+                    <div className={`filter__select-dropdown__option`}>All</div>
+                    {typeData.map((type) => (
+                        <div className="filter__select-dropdown__option"  key={type._id}>{type.name}</div>
                     ))}
-                </select>
+                </div>
             </div>
-            <div class="filter__select-wrapper">
-                <select className="select">
-                    <option disabled selected>Ability</option>
-                </select>
+            <div className="filter__select-wrapper" onClick={(e) => toggleDropDown('ability')}>
+                <div>{ typeFilter == '' ? 'Abilities: All' : 'Abilities: ' + typeFilter}</div>
+                <div className={`filter__select-dropdown ${isDropdownDisplayed('types') ? 'active--ability' : ''}`}>
+                <div className={`filter__select-dropdown__option`}>All</div>
+                    {typeData.map((type) => (
+                        <div className="filter__select-dropdown__option"  key={type._id}>{type.name}</div>
+                    ))}
+                </div>
+            </div> */}
+            <div className="filter__select-reset" onClick={(e) => {searchPokemons('')}}> 
+                Reset
             </div>
         </div>
     )

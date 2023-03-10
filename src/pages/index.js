@@ -15,7 +15,10 @@ export async function getServerSideProps() {
     await mongooseClient();
     const pokemonList = await Pokemon.find({});
     const typeList = await Type.find({
-        _id: {$ne: 1|2}
+        $and: [
+            {_id: {$ne: 10001}},
+            {_id: {$ne: 10002}},
+        ]
     })
   
     pokemonList.sort((a, b) => a.id - b.id);

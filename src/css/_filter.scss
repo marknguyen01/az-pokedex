@@ -2,12 +2,67 @@
     @apply flex flex-row mb-24 gap-5 flex-wrap;
     
     &__select-wrapper {
-        @apply px-6 py-3 rounded-xl overflow-hidden;
-        width: 200px;
+        @apply w-full px-6 py-3 rounded-xl capitalize relative xl:w-80;
         background-color: $accent-bg-color;
+        height: fit-content;
+        border: 1px solid transparent;
+        transition: all 0.5s ease;
 
-        select {
-            @apply w-full capitalize outline-none;
+        &:hover {
+            @apply cursor-pointer;
+            border: 1px solid #8F9396;
+            & > .filter__select-dropdown {
+                opacity: 1;
+            }
         }
+
+        @each $type, $color in $types {
+            &.active--#{$type} {
+                border: 1px solid $color !important;
+                background-color: $color;
+                
+                .filter__select-title {
+                    color: $accent-bg-color;
+                }
+            }
+        }
+    }
+
+    &__select-dropdown {
+        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-14;
+        opacity: 0;
+        height: 300px;
+        transition: opacity 0.5s ease;
+        background-color: $accent-bg-color;
+        z-index: 50;
+
+        &__option {
+            @apply px-3 py-1 rounded-xl;
+            height: fit-content;
+
+            &:hover {
+                @apply cursor-pointer;
+                background-color: $primary-bg-color;
+            }
+
+            &.active--all {
+                background-color: #8F9396;
+                color: $accent-bg-color;
+            }
+
+            @each $type, $color in $types {
+                &.active--#{$type} {
+                    background-color: $color;
+                    color: $accent-bg-color;
+                }
+            }
+        }
+    }
+
+    &__select-reset {
+        @apply px-6 py-3 rounded-xl cursor-pointer;
+        color: $accent-bg-color;
+        background-color: #8F9396;
+        height: fit-content;
     }
 }

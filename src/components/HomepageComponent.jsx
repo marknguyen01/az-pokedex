@@ -1,58 +1,78 @@
-'use client';
+import React, { useState } from 'react';
 
-import React, { useState, createContext, useEffect } from 'react';
-
+import { PokemonDataContext } from '../context/PokemonDataContext';
 import PokemonCardComponent from '../components/PokemonCardComponent';
 import SearchBarComponent from '../components/SearchBarComponent';
 import FilterComponent from './FilterComponent';
 
-export const PokemonContext = createContext();
-
 const HomepageComponent = ({pokemons, types}) => {
-    const pokemonsObj = JSON.parse(pokemons);
-    const [pokemonList, setPokemonList] = useState(pokemonsObj);
+    const pokemonData = JSON.parse(pokemons);
+    const typeData = JSON.parse(types);
+    const [finalResults, setFinalResults] = useState(pokemonData);
+
     const [previousSearchTerm, setPreviousSearchTerm] = useState('');
-    const [searchCategory, setSearchCategory] = useState('');
+    const [typeFilter, setTypeFilter] = useState('');
+    const [weaknessFilter, setWeaknessFilter] = useState('');
+    const [abilityFilter, setAbilityFilter] = useState('');
 
-    const filterPokemons = (searchTerm, searchCategory) => {
-        // Avoid running search again if it's the same search term
-        if(previousSearchTerm !== searchTerm) {
-            // Display all pokemons if empty
-            if(searchTerm === '') {
-                setPokemonList(pokemonsObj);
-            } else {
-                // If search term is just a number, filter by pokemon id
-                if(!isNaN(parseInt(searchTerm))) {
-                    setPokemonList(pokemonsObj.filter((pokemon) => {
-                        return pokemon._id == searchTerm
-                    }));
-                } else {
-                    // Search by category
-                    setPokemonList(pokemonsObj.filter((pokemon) => {
-                        if(searchCategory === 'types') {
-                            return pokemon.types.some((type) => {
-                                return type.type.name === searchTerm.toLowerCase().replaceAll(' ', '-');
-                            });
-                        } else {
-                            return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
-                        }
-                    }));
-                }
+    const searchPokemons = (searchTerm, searchTypeFilter = '', searchWeaknessFilter = '', searchAbilityFilter = '') => {
+        let results = {};
+        // Only run search again if one of the setting is changed
+        if(!(searchTerm === previousSearchTerm && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
+            && searchAbilityFilter === abilityFilter)) {
+            // If all settings are default, return the full list
+            if(searchTerm === '' && searchTypeFilter === '' && searchWeaknessFilter === '' && searchAbilityFilter === '') {
+                results = pokemonData;
+                setTypeFilter('');
+                setPreviousSearchTerm('');
             }
-            setPreviousSearchTerm(searchTerm);
+            else {
+                // If search term is just a number, filter by pokemon id
+                if(searchTerm !== '' && !isNaN(parseInt(searchTerm))) {
+                    results = pokemonData.filter((pokemon) => {
+                        return pokemon._id == searchTerm
+                    });
+                }
+                
+                if(searchTerm === '') {
+                    results = pokemonData;
+                } else {
+                    results = pokemonData.filter((pokemon) => {
+                        return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
+                    });
+                }
+                setPreviousSearchTerm(searchTerm);
+    
+    
+                if(searchTypeFilter !== '') {
+                    results = results.filter((pokemon) => {
+                        return pokemon.types.some((type) => {
+                            return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
+                        })
+                    });
+                }
+                setTypeFilter(searchTypeFilter);
+            }
+    
+            console.log(finalResults);
+    
+            setFinalResults(results);
         }
-    }
 
-    const updateSearchCategoryState = (nextState) => {
-        setSearchCategory(nextState);
     }
-
     return(
-        <>
-            <SearchBarComponent filterPokemons={filterPokemons}></SearchBarComponent>
-            <FilterComponent types={JSON.parse(types)}></FilterComponent>
-            <PokemonCardComponent pokemons={pokemonList} filterPokemons={filterPokemons} updateSearchCategoryState={updateSearchCategoryState}></PokemonCardComponent>
-        </>
+        <PokemonDataContext.Provider value={{
+            pokemonData, typeData, 
+            finalResults, setFinalResults,
+            previousSearchTerm, setPreviousSearchTerm, 
+            typeFilter, setTypeFilter,
+            weaknessFilter, setWeaknessFilter,
+            searchPokemons,
+            }}>
+            <SearchBarComponent></SearchBarComponent>
+            <FilterComponent></FilterComponent>
+            <PokemonCardComponent></PokemonCardComponent>
+        </PokemonDataContext.Provider>
     )
 }
 

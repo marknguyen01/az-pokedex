@@ -24,7 +24,7 @@ const HomepageComponent = ({pokemons, types}) => {
         if(!(searchTerm === previousSearchFilter && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
             && searchAbilityFilter === abilityFilter)) {
             // If all settings are default, return the full list
-            if(searchTerm === '' && searchTypeFilter === '' && searchWeaknessFilter === '' && searchAbilityFilter === '') {
+            if(!searchTerm && !searchTypeFilter && !searchWeaknessFilter && !searchAbilityFilter) {
                 results = pokemonData;
                 setTypeFilter('');
                 setSearchFilter('');
@@ -32,33 +32,34 @@ const HomepageComponent = ({pokemons, types}) => {
             }
             else {
                 // If search term is just a number, filter by pokemon id
-                if(searchTerm !== '' && !isNaN(parseInt(searchTerm))) {
+                if(searchTerm && !isNaN(parseInt(searchTerm))) {
                     results = pokemonData.filter((pokemon) => {
                         return pokemon._id == searchTerm
                     });
-                }
-                
-                if(searchTerm === '') {
-                    results = pokemonData;
+                    setPreviousSearchFilter(searchTerm);
                 } else {
-                    results = pokemonData.filter((pokemon) => {
-                        return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
-                    });
+                    if(!searchTerm) {
+                        results = pokemonData;
+                    } else {
+                        results = pokemonData.filter((pokemon) => {
+                            return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
+                        });
+                    }
+                    setPreviousSearchFilter(searchTerm);
+        
+        
+                    if(searchTypeFilter) {
+                        results = results.filter((pokemon) => {
+                            return pokemon.types.some((type) => {
+                                return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
+                            })
+                        });
+                    }
+                    setTypeFilter(searchTypeFilter);
                 }
-                setPreviousSearchFilter(searchTerm);
-    
-    
-                if(searchTypeFilter !== '') {
-                    results = results.filter((pokemon) => {
-                        return pokemon.types.some((type) => {
-                            return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
-                        })
-                    });
-                }
-                setTypeFilter(searchTypeFilter);
             }
     
-            console.log(finalResults);
+            console.log(results);
     
             setFinalResults(results);
         }

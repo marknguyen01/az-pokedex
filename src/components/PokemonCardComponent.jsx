@@ -63,7 +63,7 @@ function changeStatOrder(stat) {
 }
 
 export default function PokemonCardComponent(props) {
-    const {finalResults, isLoadingCards, setLoadingCards, previousSearchTerm, searchPokemons} = useContext(PokemonDataContext);
+    const {finalResults, isLoadingCards, setLoadingCards, previousSearchFilter, searchPokemons} = useContext(PokemonDataContext);
     
     useEffect(() => {
         setLoadingCards(false);
@@ -89,7 +89,7 @@ export default function PokemonCardComponent(props) {
                                 <div 
                                     key={type.type.name}
                                     className={`pokemon-card__type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
-                                    onClick={(e) => {searchPokemons(previousSearchTerm, type.type.name)}}
+                                    onClick={(e) => {searchPokemons(previousSearchFilter, type.type.name)}}
                                 >{ type.type.name }</div>
                             )}
                         </div>

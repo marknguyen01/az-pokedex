@@ -50,7 +50,7 @@ export default function FilterComponent() {
                     ))}
                 </div>
             </div> */}
-            <div className="filter__select-reset" onClick={(e) => {searchPokemons('')}}> 
+            <div className="filter__select-reset" onClick={(e) => {searchPokemons()}}> 
                 Reset
             </div>
         </div>

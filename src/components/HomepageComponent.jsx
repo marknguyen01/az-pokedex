@@ -46,17 +46,16 @@ const HomepageComponent = ({pokemons, types}) => {
                         });
                     }
                     setPreviousSearchFilter(searchTerm);
-        
-        
-                    if(searchTypeFilter) {
-                        results = results.filter((pokemon) => {
-                            return pokemon.types.some((type) => {
-                                return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
-                            })
-                        });
-                    }
-                    setTypeFilter(searchTypeFilter);
                 }
+                
+                if(searchTypeFilter) {
+                    results = results.filter((pokemon) => {
+                        return pokemon.types.some((type) => {
+                            return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
+                        })
+                    });
+                }
+                setTypeFilter(searchTypeFilter);
             }
     
             console.log(results);

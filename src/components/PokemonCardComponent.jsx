@@ -74,7 +74,7 @@ export default function PokemonCardComponent(props) {
             { isLoadingCards ? <LoadingComponent /> : finalResults.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
-                        <div className='w-32 h-32 absolute top-6'>
+                        <div className='pokemon-card__img'>
                             { process.env.POKEMON_IMG_LAZY_LOAD_LIMIT && index < process.env.POKEMON_IMG_LAZY_LOAD_LIMIT ?
                                 <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
                                 alt={pokemon.name} width={128} height={128}

@@ -28,6 +28,8 @@ $types:(
   "fairy": #D685AD
 );
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
 @import "~tailwindcss/base";
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
@@ -47,6 +49,7 @@ body {
   max-width: 100vw;
   background: $primary-bg-color;
   color: $primary-text-color;
+  font-family: 'Lato', sans-serif;
 }
 
 
@@ -83,7 +86,7 @@ a {
   position: absolute;
   width: 60px;
   height: 30px;
-  background-color: red;
+  background-color: $red-color;
   border-bottom: 4px solid;
   top: -4px
 }

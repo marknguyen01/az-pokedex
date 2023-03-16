@@ -1,42 +1,51 @@
 .filter {
     @apply flex flex-row mb-24 gap-5 flex-wrap;
-    
+
     &__select-wrapper {
-        @apply w-full px-6 py-3 rounded-xl capitalize relative xl:w-80;
+        @apply w-full px-6 py-3 rounded-xl capitalize relative xl:w-80 drop-shadow flex flex-row;
         background-color: $accent-bg-color;
         height: fit-content;
-        border: 1px solid transparent;
+        border: 2px solid transparent;
         transition: all 0.5s ease;
+        z-index: 50;
+
 
         &:hover {
             @apply cursor-pointer;
-            border: 1px solid #8F9396;
-            & > .filter__select-dropdown {
-                opacity: 1;
-                z-index: 50;
-                visibility: visible;
-            }
+            border: 2px solid #e0e0e0;
         }
 
         @each $type, $color in $types {
             &.active--#{$type} {
-                border: 1px solid $color !important;
+                border: 2px solid #e0e0e0;
                 background-color: $color;
-                
-                .filter__select-title {
-                    color: $accent-bg-color;
+            }
+        }
+
+        &:not([class*='active--all']) {
+            .filter__select-expand {
+                &:before, &:after{
+                    background-color: $accent-bg-color;
                 }
+            }
+            .filter__select-title {
+                color: $accent-bg-color;
             }
         }
     }
 
     &__select-dropdown {
-        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-12;
+        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-16;
         opacity: 0;
-        height: 300px;
+        max-height: 350px;
         transition: opacity 0.5s ease;
         background-color: $accent-bg-color;
         visibility: hidden;
+
+        &.active--types {
+            opacity: 1;
+            visibility: visible;
+        }
 
         &__option {
             @apply px-3 py-1 rounded-xl;
@@ -58,6 +67,41 @@
                     color: $accent-bg-color;
                 }
             }
+        }
+    }
+
+    &__select-expand {
+        @apply relative w-4 h-4 self-center ml-auto;
+    
+        &:before,
+        &:after{
+            @apply absolute;
+            content: "";
+            background-color: $primary-text-color;
+            transition: transform 0.25s ease-out;
+        }
+    
+        /* Vertical line */
+        &:before{
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            margin-left: -2px;
+        }
+    
+        /* horizontal line */
+        &:after{
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            margin-top: -2px;
+        }
+
+        &.active {
+            &:before{ transform: rotate(90deg); }
+            &:after{ transform: rotate(180deg); }
         }
     }
 

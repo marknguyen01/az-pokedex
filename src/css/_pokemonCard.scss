@@ -3,6 +3,7 @@
 
 .pokemon-cards {
     @apply grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 lg:grid-cols-6 lg:gap-3 mt-32;
+    min-height: 80vh;
     .pokemon-card {
         @apply flex flex-col relative rounded-xl overflow-hidden;
         border: 2px solid #e0e0e0;
@@ -17,8 +18,11 @@
             border-bottom-left-radius: 100% 40%;
             border-bottom-right-radius: 100% 40%;
         }
+        &__body {
+            @apply px-4 pb-4 mt-10;
+        }
         &__img {
-            @apply w-32 h-32 absolute top-6 cursor-pointer;
+            @apply w-32 h-32 absolute top-10 cursor-pointer;
         }
         &__id {
             @apply font-semibold text-center;
@@ -28,7 +32,7 @@
             @apply text-xl text-center capitalize font-semibold;
         }
         &__type {
-            @apply text-xs text-center cursor-pointer;
+            @apply text-xs text-center cursor-pointer w-20 py-2 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2;
             text-shadow: 1px 1px 2px rgb(0 0 0 / 70%);
             transition: opacity 1s;
     

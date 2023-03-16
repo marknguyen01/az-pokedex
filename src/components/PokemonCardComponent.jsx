@@ -88,13 +88,13 @@ export default function PokemonCardComponent(props) {
                             { pokemon.types.map((type, index) => 
                                 <div 
                                     key={type.type.name}
-                                    className={`pokemon-card__type pokemon-card_type--${type.type.name} w-16 py-1 mx-1 backdrop-opacity-80 text-white bg-white/30 rounded text-white uppercase absolute top-2 ${index == 0 ? 'left-1' : 'right-1'}`}
+                                    className={`pokemon-card__type pokemon-card_type--${type.type.name} ${index == 0 ? 'left-1' : 'right-1'}`}
                                     onClick={(e) => {searchPokemons(previousSearchFilter, type.type.name)}}
                                 >{ type.type.name }</div>
                             )}
                         </div>
                     </figure>
-                    <div className='pokemon-card__body p-4'>
+                    <div className='pokemon-card__body'>
                         <div className='pokemon-card__id'>
                             N&deg;{pokemon._id}
                         </div>

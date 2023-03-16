@@ -3,22 +3,15 @@ import { useContext, useState } from "react";
 
 export default function FilterComponent() {
     const [openDropdown, setOpenDropdown] = useState('');
-    const [isToggleDropdown, setToggleDropdown] = useState(false);
+    const [toggleType, setToggleType] = useState(false);
     const {typeData, typeFilter, weaknessFilter, searchPokemons, previousSearchFilter} = useContext(PokemonDataContext);
-
-    const toggleDropDown = (name) => {
-        setOpenDropdown(name);
-        setToggleDropdown(!isToggleDropdown);
-    }
-    const isDropdownDisplayed = (name) => {
-        return isToggleDropdown && openDropdown === name;
-    }
 
     return (
         <div className="filter">
-            <div className={`filter__select-wrapper ${typeFilter === '' ? 'active--all' : 'active--' + typeFilter}`} onClick={(e) => toggleDropDown('types')}>
+            <div className={`filter__select-wrapper ${typeFilter === '' ? 'active--all' : 'active--' + typeFilter}`} onClick={() => setToggleType((prev) => !prev)}>
                 <div className='filter__select-title'>{ typeFilter === '' ? 'Types: All' : 'Types: ' + typeFilter}</div>
-                <div className={`filter__select-dropdown ${isDropdownDisplayed('types') ? 'active--types' : ''}`}>
+                <div className={`filter__select-expand ${toggleType ? 'active' : ''}`}></div>
+                <div className={`filter__select-dropdown ${toggleType ? 'active--types' : ''}`}>
                 <div 
                 className={`filter__select-dropdown__option ${typeFilter === '' ? 'active--all' : ''}`}
                 onClick={(e) => {searchPokemons(previousSearchFilter)}}

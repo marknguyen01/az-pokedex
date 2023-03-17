@@ -2,11 +2,11 @@ import React, {useContext, useState} from 'react';
 import { PokemonDataContext } from '../context/PokemonDataContext';
 
 export default function SearchBarComponent() {
-    const { searchPokemons, typeFilter, searchFilter, setSearchFilter } = useContext(PokemonDataContext);
+    const { searchPokemons, typeFilter, weaknessFilter, searchFilter, setSearchFilter } = useContext(PokemonDataContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        searchPokemons(searchFilter, typeFilter);
+        searchPokemons(searchFilter, typeFilter, weaknessFilter);
     }
 
     return(

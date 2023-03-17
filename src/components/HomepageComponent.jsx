@@ -27,6 +27,7 @@ const HomepageComponent = ({pokemons, types}) => {
             if(!searchTerm && !searchTypeFilter && !searchWeaknessFilter && !searchAbilityFilter) {
                 results = pokemonData;
                 setTypeFilter('');
+                setWeaknessFilter('');
                 setSearchFilter('');
                 setPreviousSearchFilter('');
             }
@@ -49,6 +50,7 @@ const HomepageComponent = ({pokemons, types}) => {
                 }
                 
                 if(searchTypeFilter) {
+
                     results = results.filter((pokemon) => {
                         return pokemon.types.some((type) => {
                             return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
@@ -56,6 +58,37 @@ const HomepageComponent = ({pokemons, types}) => {
                     });
                 }
                 setTypeFilter(searchTypeFilter);
+
+                if(searchWeaknessFilter) {
+                    const currentDmg = typeData.find((type) => {
+                        return type.name === searchWeaknessFilter.toLowerCase().replaceAll(' ', '-');
+                    }).damage_relations;
+
+                    const doubleDmgTo = currentDmg.double_damage_to.map(type => type.name);
+                    const halfDmgTo = currentDmg.half_damage_to.map(type => type.name);
+                    const noDmgTo = currentDmg.no_damage_to.map(type => type.name);
+
+                    results = results.filter((pokemon) => {
+                        let dmgMultiplier = 1;
+                        pokemon.types.forEach((type) => {
+                            const currentType = type.type.name;
+                            if(doubleDmgTo.includes(currentType)) {
+                                dmgMultiplier = dmgMultiplier * 2;
+                            }
+                            if(halfDmgTo.includes(currentType)) {
+                                dmgMultiplier = dmgMultiplier * 0.5;
+                            }
+                            if(noDmgTo.includes(currentType)) {
+                                dmgMultiplier = dmgMultiplier * 0;
+                            }
+                        });
+                        if(dmgMultiplier >= 2) {
+                            console.log(pokemon.name + dmgMultiplier);
+                        }
+                        return dmgMultiplier >= 2;
+                    });
+                }
+                setWeaknessFilter(searchWeaknessFilter);
             }
     
             console.log(results);

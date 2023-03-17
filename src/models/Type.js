@@ -11,7 +11,7 @@ const typeSchema =  new mongoose.Schema({
         double_damage_from: [{
             name: String,
         }],
-        double_damage_from_to: [{
+        double_damage_to: [{
             name: String,
         }],
         half_damage_from: [{

@@ -72,7 +72,7 @@ export default function PokemonCardComponent(props) {
     return (
         <div className='pokemon-cards'>
             <div className='pokemon-cards__wrapper'>
-            { isLoadingCards ? <LoadingComponent /> : finalResults.map((pokemon, index) => (
+            { isLoadingCards ? <LoadingComponent /> : finalResults.length > 0 ? finalResults.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <div className='pokemon-card__img'>
@@ -126,7 +126,7 @@ export default function PokemonCardComponent(props) {
                         </div> */}
                     </div>
                 </div>
-            ))}
+            )) : <div className="pokemon-card-not-found">No Pokemon found! Please change/reset your search criterias.</div>}
             </div>
 
         </div>

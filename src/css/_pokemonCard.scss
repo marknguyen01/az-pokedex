@@ -47,3 +47,12 @@
     
 }
 
+
+.pokemon-card-not-found {
+    @apply rounded-xl p-4 col-span-6;
+    height: fit-content;
+    border: 2px solid #e0e0e0;
+    transition: all 0.5s ease;
+    background: $accent-bg-color;
+
+}

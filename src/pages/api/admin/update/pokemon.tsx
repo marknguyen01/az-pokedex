@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await moongooseClient();
 
         const pokemonList = await getPokemons();
-        
+
         const bulkOps = pokemonList.map(pokemon => ({
             updateOne: {
-                filter: {_id: pokemon.id},
+                filter: {pokemonId: pokemon.id},
                 update: pokemon,
                 upsert: true,
             }

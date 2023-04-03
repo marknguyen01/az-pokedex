@@ -1,117 +1,19 @@
 import React, { useState } from 'react';
 
-import { PokemonDataContext } from '../context/PokemonDataContext';
-import PokemonCardComponent from '../components/PokemonCardComponent';
+import { PokemonSearchContextProvider } from '../context/PokemonSearchContext';
+
 import SearchBarComponent from '../components/SearchBarComponent';
 import FilterComponent from './FilterComponent';
+import PokemonCardsComponent from './PokemonCardsComponent';
 
-const HomepageComponent = ({pokemons, types}) => {
-    const pokemonData = JSON.parse(pokemons);
-    const typeData = JSON.parse(types);
-    const [finalResults, setFinalResults] = useState(pokemonData);
-    const [isLoadingCards, setLoadingCards] = useState(true);
+const HomepageComponent = ({types}) => {
 
-    const [previousSearchFilter, setPreviousSearchFilter] = useState('');
-    const [searchFilter, setSearchFilter] = useState('');
-    const [typeFilter, setTypeFilter] = useState('');
-    const [weaknessFilter, setWeaknessFilter] = useState('');
-    const [abilityFilter, setAbilityFilter] = useState('');
-
-    const searchPokemons = (searchTerm, searchTypeFilter = '', searchWeaknessFilter = '', searchAbilityFilter = '') => {
-        setLoadingCards(true);
-        let results = {};
-        // Only run search again if one of the setting is changed
-        if(!(searchTerm === previousSearchFilter && searchTypeFilter === typeFilter && searchWeaknessFilter === weaknessFilter 
-            && searchAbilityFilter === abilityFilter)) {
-            // If all settings are default, return the full list
-            if(!searchTerm && !searchTypeFilter && !searchWeaknessFilter && !searchAbilityFilter) {
-                results = pokemonData;
-                setTypeFilter('');
-                setWeaknessFilter('');
-                setSearchFilter('');
-                setPreviousSearchFilter('');
-            }
-            else {
-                // If search term is just a number, filter by pokemon id
-                if(searchTerm && !isNaN(parseInt(searchTerm))) {
-                    results = pokemonData.filter((pokemon) => {
-                        return pokemon._id.toString().includes(searchTerm) || pokemon.name.includes(searchTerm);
-                    });
-                    setPreviousSearchFilter(searchTerm);
-                } else {
-                    if(!searchTerm) {
-                        results = pokemonData;
-                    } else {
-                        results = pokemonData.filter((pokemon) => {
-                            return pokemon.name.includes(searchTerm.toLowerCase().replaceAll(' ', '-'));
-                        });
-                    }
-                    setPreviousSearchFilter(searchTerm);
-                }
-                
-                if(searchTypeFilter) {
-
-                    results = results.filter((pokemon) => {
-                        return pokemon.types.some((type) => {
-                            return type.type.name === searchTypeFilter.toLowerCase().replaceAll(' ', '-');
-                        })
-                    });
-                }
-                setTypeFilter(searchTypeFilter);
-
-                if(searchWeaknessFilter) {
-                    const currentDmg = typeData.find((type) => {
-                        return type.name === searchWeaknessFilter.toLowerCase().replaceAll(' ', '-');
-                    }).damage_relations;
-
-                    const doubleDmgTo = currentDmg.double_damage_to.map(type => type.name);
-                    const halfDmgTo = currentDmg.half_damage_to.map(type => type.name);
-                    const noDmgTo = currentDmg.no_damage_to.map(type => type.name);
-
-                    results = results.filter((pokemon) => {
-                        let dmgMultiplier = 1;
-                        pokemon.types.forEach((type) => {
-                            const currentType = type.type.name;
-                            if(doubleDmgTo.includes(currentType)) {
-                                dmgMultiplier = dmgMultiplier * 2;
-                            }
-                            if(halfDmgTo.includes(currentType)) {
-                                dmgMultiplier = dmgMultiplier * 0.5;
-                            }
-                            if(noDmgTo.includes(currentType)) {
-                                dmgMultiplier = dmgMultiplier * 0;
-                            }
-                        });
-                        if(dmgMultiplier >= 2) {
-                            console.log(pokemon.name + dmgMultiplier);
-                        }
-                        return dmgMultiplier >= 2;
-                    });
-                }
-                setWeaknessFilter(searchWeaknessFilter);
-            }
-    
-            console.log(results);
-    
-            setFinalResults(results);
-        }
-
-    }
     return(
-        <PokemonDataContext.Provider value={{
-            pokemonData, typeData, 
-            finalResults, setFinalResults,
-            isLoadingCards, setLoadingCards,
-            previousSearchFilter, setPreviousSearchFilter,
-            searchFilter, setSearchFilter, 
-            typeFilter, setTypeFilter,
-            weaknessFilter, setWeaknessFilter,
-            searchPokemons,
-            }}>
+        <PokemonSearchContextProvider>
             <SearchBarComponent></SearchBarComponent>
-            <FilterComponent></FilterComponent>
-            <PokemonCardComponent></PokemonCardComponent>
-        </PokemonDataContext.Provider>
+            <FilterComponent types={types}></FilterComponent>
+            <PokemonCardsComponent></PokemonCardsComponent>
+        </PokemonSearchContextProvider>
     )
 }
 

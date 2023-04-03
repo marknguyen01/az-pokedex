@@ -1,9 +1,8 @@
 'use client';
 
-import {useContext, useEffect, useState} from 'react';
+import {useContext} from 'react';
 import Image from 'next/image'
-import { PokemonDataContext } from '../context/PokemonDataContext';
-import LoadingComponent from './LoadingComponent';
+import { PokemonSearchContext } from '../context/PokemonSearchContext';
 
 function createTypeBackground(types) {
     const typesMap = new Map([
@@ -28,9 +27,9 @@ function createTypeBackground(types) {
     ]);
 
     if(types.length < 2) {
-        return {background: `${typesMap.get(types[0].type.name)}`}
+        return {background: `${typesMap.get(types[0].name)}`}
     } else {
-        return {background: `linear-gradient(90deg, ${typesMap.get(types[0].type.name)} 50%, ${typesMap.get(types[1].type.name)} 50%)`}
+        return {background: `linear-gradient(90deg, ${typesMap.get(types[0].name)} 50%, ${typesMap.get(types[1].name)} 50%)`}
     }
 }
 
@@ -63,16 +62,11 @@ function changeStatOrder(stat) {
 }
 
 export default function PokemonCardComponent(props) {
-    const {finalResults, isLoadingCards, setLoadingCards, weaknessFilter, previousSearchFilter, searchPokemons} = useContext(PokemonDataContext);
-    
-    useEffect(() => {
-        setLoadingCards(false);
-    });
-    
+    const { dispatch, state } = useContext(PokemonSearchContext);
+
     return (
-        <div className='pokemon-cards'>
-            <div className='pokemon-cards__wrapper'>
-            { isLoadingCards ? <LoadingComponent /> : finalResults.length > 0 ? finalResults.map((pokemon, index) => (
+        <>
+            { props.pokemons.length > 0 ? props.pokemons.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <div className='pokemon-card__img'>
@@ -88,10 +82,10 @@ export default function PokemonCardComponent(props) {
                         <div className='pokemon-card__types flex justify-center my-2'>
                             { pokemon.types.map((type, index) => 
                                 <div 
-                                    key={type.type.name}
-                                    className={`pokemon-card__type pokemon-card_type--${type.type.name} ${index == 0 ? 'left-1' : 'right-1'}`}
-                                    onClick={(e) => {searchPokemons(previousSearchFilter, type.type.name, weaknessFilter)}}
-                                >{ type.type.name }</div>
+                                    key={index}
+                                    className={`pokemon-card__type pokemon-card_type--${type.name} ${index == 0 ? 'left-1' : 'right-1'}`}
+                                    onClick={(e) => dispatch({type: "ADD_TYPE", payload: type.name})}
+                                >{ type.name }</div>
                             )}
                         </div>
                     </figure>
@@ -127,8 +121,6 @@ export default function PokemonCardComponent(props) {
                     </div>
                 </div>
             )) : <div className="pokemon-card-not-found">No Pokemon found! Please change/reset your search criterias.</div>}
-            </div>
-
-        </div>
+        </>
     )
 }

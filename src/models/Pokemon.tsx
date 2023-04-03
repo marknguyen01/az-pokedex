@@ -1,7 +1,7 @@
 import {models, model, Schema} from 'mongoose'
 
-interface IPokemon {
-    pokemonId: number,
+export interface IPokemon {
+    _id: number,
     abilities: [IAbility],
     base_experience: number,
     height: number,
@@ -37,8 +37,9 @@ interface IStat {
 interface IType {
     slot: number,
     type: {
-        name: string
-    }
+        name: string,
+        _id: number,
+    },
 }
 
 const abilitySchema =  new Schema<IAbility>({
@@ -75,19 +76,8 @@ const statSchema = new Schema<IStat>({
     }
 }, { _id: false })
 
-const typeSchema = new Schema({
-    slot: {
-        type: Number,
-        get: (v:any) => parseInt(v) ? Math.round(parseInt(v)) : 0,
-        set: (v:any) => parseInt(v) ? Math.round(parseInt(v)) : 0,
-    },
-    type: {
-        name: String
-    }
-}, { _id: false });
-
 const pokemonSchema = new Schema({
-    pokemonId: {
+    _id: {
         type: Number,
         get: (v:any) => parseInt(v) ? Math.round(parseInt(v)) : 0,
         set: (v:any) => parseInt(v) ? Math.round(parseInt(v)) : 0,
@@ -107,8 +97,11 @@ const pokemonSchema = new Schema({
     name: String,
     is_default: Boolean,
     stats: [statSchema],
-    types: [typeSchema],
-}, {_id: false});
+    types: [{
+        type: Number,
+        ref: 'Type'
+    }],
+});
 
 
 export default models.Pokemon || model<IPokemon>('Pokemon', pokemonSchema);

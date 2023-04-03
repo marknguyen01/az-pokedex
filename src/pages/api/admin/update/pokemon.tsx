@@ -2,22 +2,33 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import moongooseClient from '../../../../lib/mongooseClient';
 import Pokemon from '../../../../models/Pokemon';
+import Type, {IType} from '../../../../models/Type';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // The intention is to run this test env where you have more resources to scrap the data
     // Disable this in prod if your server can't handle the work load
-    if(!process.env.DISABLE_ADMIN_SCRAP_IN_PROD) {
+    // if(!process.env.DISABLE_ADMIN_SCRAP_IN_PROD) {
         await moongooseClient();
 
         const pokemonList = await getPokemons();
 
-        const bulkOps = pokemonList.map(pokemon => ({
-            updateOne: {
-                filter: {pokemonId: pokemon.id},
+        const types: Array<IType> = await Type.find({}).exec();
+
+        const bulkOps = pokemonList.slice(0, 2).map(pokemon => {
+
+            pokemon.types = pokemon.types.map((type:any) => {
+                const paths = type.type.url.split("/");
+                return parseInt(paths[paths.length - 2]);
+            });
+
+            console.log(pokemon.types);
+
+            return { updateOne: {
+                filter: {_id: pokemon.id},
                 update: pokemon,
                 upsert: true,
-            }
-        }));
+            }}
+        });
     
         Pokemon.bulkWrite(bulkOps).then(result => {
             res.json({
@@ -31,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             res.status(400).end();
         });
-    }
+    //}
 }
 
 async function getPokemons() {

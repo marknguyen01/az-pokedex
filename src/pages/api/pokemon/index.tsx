@@ -88,8 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 console.log(finalResults.slice(0,3));
                 return res.status(200).send(finalResults);
             } else {
-                console.log(results);
-                return res.status(400);
+                return res.status(404).send([]);
             }
         });
 

@@ -1,12 +1,16 @@
 .filter {
-    @apply flex flex-row mb-24 gap-5 flex-wrap;
+    @apply flex flex-row mb-24 gap-5 flex-wrap capitalize;
+
+    &-wrapper {
+        @apply relative;
+    }
 
     &__select-wrapper {
-        @apply w-full px-6 py-3 rounded-xl capitalize relative xl:w-80 drop-shadow flex flex-row;
+        @apply w-full px-6 py-3 rounded-xl relative xl:w-80 drop-shadow flex flex-row;
         background-color: $accent-bg-color;
         height: fit-content;
         border: 2px solid transparent;
-        transition: all 0.5s ease;
+        transition: background-color 0.5s ease;
         z-index: 50;
 
 
@@ -34,15 +38,13 @@
         }
     }
 
-    &__select-dropdown {
-        @apply flex flex-wrap gap-3 overflow-y-auto px-6 py-3 absolute -left-0.5 rounded-xl top-16;
-        opacity: 0;
-        max-height: 350px;
-        transition: opacity 0.5s ease;
+    &-dropdown {
+        @apply drop-shadow mt-4 h-0 flex flex-wrap gap-3 overflow-y-auto xl:absolute opacity-0 invisible xl:-left-0.5 xl:top-16 rounded-xl;
+        transition: height 0.5s ease, opacity 0.5s ease;
         background-color: $accent-bg-color;
-        visibility: hidden;
 
         &.active--types {
+            @apply px-6 py-3 h-48 xl:h-fit xl:max-h-80 z-10;
             opacity: 1;
             visibility: visible;
         }

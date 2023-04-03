@@ -4,7 +4,7 @@
 .pokemon-cards {
     min-height: max-content;
     &__wrapper {
-        @apply grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 xl:grid-cols-6 xl:gap-3 mt-32;
+        @apply grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 xl:grid-cols-6 xl:gap-3;
     }
     .pokemon-card {
         @apply flex flex-col relative rounded-xl overflow-hidden;

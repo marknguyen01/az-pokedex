@@ -17,7 +17,7 @@ const INITIAL_STATE:State = {
     query: "",
     type: "",
     weakness: "",
-    offset: 0,
+    offset: 1,
     loading: true,
 }
 

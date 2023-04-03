@@ -38,7 +38,7 @@ export default function PokemonCardsComponent(props) {
             `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&offset=${offset}&limit=${POKEMONS_PER_PAGE}`
         ).then((res) => res.json())
         .then((data) => {
-            if(data.length <= 151) {
+            if(data.length < 151) {
                 setHasMore(false);
             }
             setPokemons(pokemons.concat(data));

@@ -5,7 +5,7 @@ import LoadingComponent from './LoadingComponent';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function PokemonCardsComponent(props) {
-    let POKEMONS_PER_PAGE = 151;
+    const POKEMONS_PER_PAGE = 100;
     const [pokemons, setPokemons] = useState([]);
     const [hasMore, setHasMore] = useState(true);
 
@@ -19,13 +19,13 @@ export default function PokemonCardsComponent(props) {
 
     const fetchData = () => {
         dispatch({type: 'FETCH'});
-        if(query || type || weakness) {
-            POKEMONS_PER_PAGE = 0;
-        }
         fetch(
-            `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&limit=${POKEMONS_PER_PAGE}`
+            `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&limit=${(query || type || weakness) ? 0 : POKEMONS_PER_PAGE}&offset=${offset}`
         ).then((res) => res.json())
         .then((data) => {
+            if((query || type || weakness)) {
+                setHasMore(false);
+            }
             setPokemons(data);
             dispatch({type: 'SUCCESS'});
         })
@@ -38,10 +38,10 @@ export default function PokemonCardsComponent(props) {
     const fetchMoreData = () => {
         dispatch({type: "PAGINATE", payload: offset + 1});
         fetch(
-            `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&offset=${offset}&limit=${POKEMONS_PER_PAGE}`
+            `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&limit=${POKEMONS_PER_PAGE}&offset=${offset + 1}`
         ).then((res) => res.json())
         .then((data) => {
-            if(data.length < 151) {
+            if(data.length < POKEMONS_PER_PAGE) {
                 setHasMore(false);
             }
             setPokemons(pokemons.concat(data));

@@ -9,7 +9,7 @@ export interface IPokemon {
     name: string,
     is_default: boolean,
     stats: [IStat],
-    types: [IType],
+    types: IType[],
 }
 
 interface IAbility {

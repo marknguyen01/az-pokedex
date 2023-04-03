@@ -17,7 +17,7 @@ const INITIAL_STATE:State = {
     query: "",
     type: "",
     weakness: "",
-    offset: 1,
+    offset: 0,
     loading: true,
 }
 
@@ -26,9 +26,9 @@ const PokemonSearchReducer = (state: State, action: Action) => {
         case "QUERY":
             return { ...state, query: action.payload};
         case "ADD_TYPE": 
-            return { ...state, type: action.payload};
+            return { ...state, type: action.payload, offset: 0};
         case "ADD_WEAKNESS":
-            return { ...state, weakness: action.payload};
+            return { ...state, weakness: action.payload, offset: 0};
         case "RESET":
             return {...state, query: "", type: "", weakness: ""};
         case "PAGINATE":

@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
     
-        queryBuilder.exec(async (err, results) => {
+        queryBuilder.populate("types").exec(async (err, results) => {
             let finalResults = results;
             if(query.type) {
                 finalResults = finalResults.filter((pokemon) => {

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import Pokemon from '../../../models/Pokemon';
+import Pokemon, {IPokemon} from '../../../models/Pokemon';
 import {IType} from '../../../models/Type';
 import fetchAPI, { FetchAPIRequest } from '../../../lib/api';
 import moongooseClient from '../../../lib/mongooseClient';
@@ -33,13 +33,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
     
+        const limit = query.limit ? query.limit : 0;
+        const offset = query.offset ? limit * query.offset : 0;
         queryBuilder.sort('_id')
-        .limit(query.limit ? query.limit : 0)
-        .skip(query.offset ? (query.limit ? query.limit : 0) * query.offset : 0)
+        .limit(limit)
+        .skip(offset)
         .populate("types").exec(async (err, results) => {
             let finalResults = results;
             if(query.type) {
-                finalResults = finalResults.filter((pokemon) => {
+                finalResults = finalResults.filter((pokemon:any) => {
                     return pokemon.types.some((type:IType) => {
                         return type.name === query.type?.toLowerCase();
                     });
@@ -83,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             if (!err) {
-                console.log(finalResults);
+                console.log(finalResults.slice(0,3));
                 return res.status(200).send(finalResults);
             } else {
                 return res.status(500);

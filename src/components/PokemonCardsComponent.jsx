@@ -5,7 +5,7 @@ import LoadingComponent from './LoadingComponent';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function PokemonCardsComponent(props) {
-    const POKEMONS_PER_PAGE = 151;
+    let POKEMONS_PER_PAGE = 151;
     const [pokemons, setPokemons] = useState([]);
     const [hasMore, setHasMore] = useState(true);
 
@@ -19,6 +19,9 @@ export default function PokemonCardsComponent(props) {
 
     const fetchData = () => {
         dispatch({type: 'FETCH'});
+        if(query || type || weakness) {
+            POKEMONS_PER_PAGE = 0;
+        }
         fetch(
             `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&limit=${POKEMONS_PER_PAGE}`
         ).then((res) => res.json())

@@ -10,10 +10,13 @@ interface PokemonSearchParam {
     type?: string;
     weakness?: string;
     ability?: string;
+    limit?: number;
+    offset?: number;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     await moongooseClient();
+
 
     if(req.method === "GET") {
         const query:PokemonSearchParam = req.query;
@@ -30,7 +33,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
     
-        queryBuilder.populate("types").exec(async (err, results) => {
+        queryBuilder.sort('_id')
+        .limit(query.limit ? query.limit : 0)
+        .skip(query.offset ? (query.limit ? query.limit : 0) * query.offset : 0)
+        .populate("types").exec(async (err, results) => {
             let finalResults = results;
             if(query.type) {
                 finalResults = finalResults.filter((pokemon) => {
@@ -41,7 +47,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             if(query.weakness) {
-                
                 await fetchAPI<IType[]>('api/type', FetchAPIRequest.GET).then((data:IType[]) => {
                     if(data && data.length > 0) {
                         const currentDmg = data?.find((type:IType) => {

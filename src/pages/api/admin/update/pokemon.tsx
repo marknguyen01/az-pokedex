@@ -12,9 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const pokemonList = await getPokemons();
 
-        const types: Array<IType> = await Type.find({}).exec();
-
-        const bulkOps = pokemonList.slice(0, 2).map(pokemon => {
+        const bulkOps = pokemonList.map(pokemon => {
 
             pokemon.types = pokemon.types.map((type:any) => {
                 const paths = type.type.url.split("/");

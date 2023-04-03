@@ -2,7 +2,7 @@
 
 
 .pokemon-cards {
-    min-height: 80vh;
+    min-height: max-content;
     &__wrapper {
         @apply grid grid-cols-2 gap-x-1 gap-y-3 md:grid-cols-3 xl:grid-cols-6 xl:gap-3 mt-32;
     }

@@ -1,6 +1,5 @@
 import { PokemonSearchContext } from '../context/PokemonSearchContext';
 import { useContext, useState } from "react";
-import { SchemaTypes } from 'mongoose';
 
 export default function FilterComponent({types}) {
     const [toggleType, setToggleType] = useState(false);

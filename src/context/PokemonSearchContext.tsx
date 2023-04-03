@@ -1,10 +1,10 @@
 import React, { useReducer, createContext } from "react";
-import Pokemon from "../models/Pokemon";
 
 interface State {
     query: string,
     type: string,
     weakness: string,
+    offset: number,
     loading: boolean,
 }
 
@@ -17,6 +17,7 @@ const INITIAL_STATE:State = {
     query: "",
     type: "",
     weakness: "",
+    offset: 0,
     loading: true,
 }
 
@@ -29,7 +30,10 @@ const PokemonSearchReducer = (state: State, action: Action) => {
         case "ADD_WEAKNESS":
             return { ...state, weakness: action.payload};
         case "RESET":
-            return {...state, query: "", type: "", weakness: ""}
+            return {...state, query: "", type: "", weakness: ""};
+        case "PAGINATE":
+            return {...state, offset: parseInt(action.payload)};
+
 
         case "FETCH":
             return { ...state, loading: true};

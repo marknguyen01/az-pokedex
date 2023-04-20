@@ -26,6 +26,11 @@ export default function PokemonCardsComponent(props) {
             if((query || type || weakness)) {
                 setHasMore(false);
             }
+            if(data.length < POKEMONS_PER_PAGE) {
+                setHasMore(false);
+            } else {
+                setHasMore(true);
+            }
             setPokemons(data);
             dispatch({type: 'SUCCESS'});
         })

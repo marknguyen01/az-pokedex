@@ -2,7 +2,7 @@ $primary-bg-color:  #F6F8FC;
 $accent-bg-color: #FFFFFF;
 
 $primary-text-color: #000000;
-$accent-text-color: #BBBBCD;
+$accent-text-color: #777777;
 $red-color: #ff534f;
 
 
@@ -34,6 +34,7 @@ $types:(
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
 
+@import "navbar";
 @import "searchBar";
 @import "filter";
 @import "pokemonCard";

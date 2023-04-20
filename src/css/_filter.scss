@@ -6,11 +6,11 @@
     }
 
     &__select-wrapper {
-        @apply w-full px-6 py-3 rounded-xl relative xl:w-80 drop-shadow flex flex-row;
+        @apply w-full px-6 py-3 rounded-2xl relative xl:w-80 drop-shadow flex flex-row;
         background-color: $accent-bg-color;
         height: fit-content;
         border: 2px solid transparent;
-        transition: background-color 0.5s ease;
+        transition: background-color 0.5s ease, border 0.5s ease;
         z-index: 50;
 
 
@@ -108,9 +108,9 @@
     }
 
     &__select-reset {
-        @apply px-6 py-3 rounded-xl cursor-pointer;
+        @apply px-6 py-3 rounded-2xl cursor-pointer;
         color: $accent-bg-color;
-        background-color: #8F9396;
+        background-color: $accent-text-color;
         height: fit-content;
     }
 }

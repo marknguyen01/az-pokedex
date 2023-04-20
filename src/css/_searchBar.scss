@@ -1,17 +1,23 @@
 .search-bar {
-    @apply my-6 w-full rounded-xl overflow-hidden drop-shadow;
+    @apply my-6 w-full rounded-2xl overflow-hidden drop-shadow;
+    transition: border-color 0.5s ease;
+    border: 2px solid transparent;
 
     &__container {
         @apply flex flex-row px-6 py-3 ;
         background-color: $accent-bg-color;
     }
     &__button {
-        @apply p-3 rounded-xl;
+        @apply p-3 rounded-2xl;
         background-color: $red-color;
         color: $accent-bg-color;
     }
 
     &__input {
         @apply w-full focus:outline-none;
+    }
+
+    &:hover {
+        border: 2px solid #e0e0e0;
     }
 }

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-    
+
 let cached = global.mongoose;
 let database = 'az-pokedex';
 

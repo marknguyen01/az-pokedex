@@ -1,3 +1,4 @@
+
 export enum FetchAPIRequest {
     GET= "GET",
     POST= "POST",
@@ -14,7 +15,9 @@ export default async function fetchAPI<T>(url:string, method:FetchAPIRequest, bo
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(response.statusText)
+                return response.text().then(text => {
+                    throw new Error('Failed to make a request to API: ' + url);
+                })
             }
             return response.json() as Promise<T>
         })

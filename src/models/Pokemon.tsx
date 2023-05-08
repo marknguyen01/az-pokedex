@@ -1,5 +1,5 @@
+import Type, { IType } from './Type'
 import {models, model, Schema} from 'mongoose'
-import { IType } from './Type'
 
 export interface IPokemon {
     _id: number,
@@ -92,7 +92,7 @@ const pokemonSchema = new Schema({
     stats: [statSchema],
     types: [{
         type: Number,
-        ref: 'Type'
+        ref: Type
     }],
 });
 

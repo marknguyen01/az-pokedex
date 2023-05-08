@@ -1,4 +1,5 @@
 import {models, model, Schema} from 'mongoose'
+import { IType } from './Type'
 
 export interface IPokemon {
     _id: number,
@@ -32,14 +33,6 @@ interface IStat {
     stat: {
         name: string
     }
-}
-
-interface IType {
-    slot: number,
-    type: {
-        name: string,
-        _id: number,
-    },
 }
 
 const abilitySchema =  new Schema<IAbility>({

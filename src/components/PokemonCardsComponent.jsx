@@ -26,12 +26,12 @@ export default function PokemonCardsComponent(props) {
             if((query || type || weakness)) {
                 setHasMore(false);
             }
-            if(data.length < POKEMONS_PER_PAGE) {
+            if(data.results.length < POKEMONS_PER_PAGE) {
                 setHasMore(false);
             } else {
                 setHasMore(true);
             }
-            setPokemons(data);
+            setPokemons(data.results);
             dispatch({type: 'SUCCESS'});
         })
         .catch((err) => {
@@ -46,10 +46,10 @@ export default function PokemonCardsComponent(props) {
             `/api/pokemon?search=${query}&type=${type}&weakness=${weakness}&limit=${POKEMONS_PER_PAGE}&offset=${offset + 1}`
         ).then((res) => res.json())
         .then((data) => {
-            if(data.length < POKEMONS_PER_PAGE) {
+            if(data.results.length < POKEMONS_PER_PAGE) {
                 setHasMore(false);
             }
-            setPokemons(pokemons.concat(data));
+            setPokemons(pokemons.concat(data.results));
         })
         .catch((err) => {
             console.log(err);

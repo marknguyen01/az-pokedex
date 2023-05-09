@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            types: types
+            types: types.results
         }
     }
 }

@@ -72,7 +72,7 @@ export default function PokemonCard({pokemons}: {
             { pokemons?.length > 0 ? pokemons?.map((pokemon, index) => (
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
-                        <div className='pokemon-card__img'>
+                        <a className='pokemon-card__img' href={`/pokemon/${pokemon.name}`}>
                             { process.env.POKEMON_IMG_LAZY_LOAD_LIMIT && index < process.env.POKEMON_IMG_LAZY_LOAD_LIMIT ?
                                 <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
                                 alt={pokemon.name} width={128} height={128}
@@ -81,7 +81,7 @@ export default function PokemonCard({pokemons}: {
                                 : <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
                                 alt={pokemon.name} width={128} height={128} />
                             }
-                        </div>
+                        </a>
                         <div className='pokemon-card__types flex justify-center my-2'>
                             { pokemon.types.map((type, index) => 
                                 <div 

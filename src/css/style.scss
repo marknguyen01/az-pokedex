@@ -64,11 +64,14 @@ a {
 
 }
 
+.infinite-loading {
+  @apply w-full;
+}
 .loader {
-  @apply absolute p-9 rounded-full;
-  top: 50%;
+  @apply relative p-9 rounded-full;
+  width: fit-content;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   background: $accent-bg-color;
   padding: 20px;
 }

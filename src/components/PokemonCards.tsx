@@ -66,9 +66,10 @@ export default function PokemonCards() {
                 dataLength={pokemons.length} //This is important field to render the next data
                 next={fetchMoreData}
                 hasMore={hasMore}
+                loader={<div className="infinite-loading"><LoadingSpinner /></div>}
             >
                 <div className='pokemon-cards__wrapper'>
-                    {loading ? <LoadingSpinner /> : <PokemonCard pokemons={pokemons} />}
+                    {loading ? "" : <PokemonCard pokemons={pokemons} />}
                 </div>
             </InfiniteScroll>
 

@@ -1,9 +1,20 @@
+'use client';
+
 import React, { useState } from 'react';
 import Link from 'next/link'
-import { useRouter } from 'next/router';
+import { useSelectedLayoutSegment } from 'next/navigation';
 
-const NavbarComponent = () => {
-    const router = useRouter();
+type Item = {
+    name: string;
+    slug: string;
+}
+
+const items:Item[] = [{
+    name: "Home",
+    slug: "",
+}]
+
+export function GlobalNavbar() {
     const [isMenuActive, setIsMenuActive] = useState(false);
     const toggleMenu = () => {
         setIsMenuActive(!isMenuActive);
@@ -21,21 +32,9 @@ const NavbarComponent = () => {
             </div>
             <div className={`navbar__menu ${isMenuActive ? 'active' : ''}`}>
                 <div className="navbar__menu-wrapper">
-                    <Link href="/" className={router.pathname == "/" ? "active" : ""}>
-                        Home
-                    </Link>
-                    <Link href="/login" className={router.pathname == "/login" ? "active" : ""}>
-                        Login
-                    </Link>
-                    {/* <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                        Home
-                    </a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                        Examples
-                    </a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                        Blog
-                    </a> */}
+                    { items.map(item => (
+                        <GlobalNavbarItem key={item.slug} item={item} />
+                    ))}
                 </div>
                 <div className="navbar__right">
                     <a href="https://www.buymeacoffee.com/marknguyen">Buy me a Coffee</a>
@@ -44,4 +43,18 @@ const NavbarComponent = () => {
         </nav>
     )
 }
-export default NavbarComponent;
+
+function GlobalNavbarItem({
+    item
+}: {
+    item: Item
+}) {
+    const segment = useSelectedLayoutSegment();
+    const isActive = item.slug === segment;
+
+    return(
+        <Link href={`/${item.slug}`} className={isActive ? "active" : ""}>
+            { item.name }
+        </Link>
+    )
+}

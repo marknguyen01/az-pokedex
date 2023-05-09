@@ -1,10 +1,12 @@
-import {useContext, useState, useEffect} from 'react';
+'use client';
+
+import React, {useContext, useState, useEffect} from 'react';
 import { PokemonSearchContext } from "../context/PokemonSearchContext";
-import PokemonCardComponent from '../components/PokemonCardComponent';
-import LoadingComponent from './LoadingComponent';
+import PokemonCard from '../components/PokemonCard';
+import LoadingSpinner from './LoadingSpinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-export default function PokemonCardsComponent(props) {
+export default function PokemonCards() {
     const POKEMONS_PER_PAGE = 100;
     const [pokemons, setPokemons] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -64,10 +66,9 @@ export default function PokemonCardsComponent(props) {
                 dataLength={pokemons.length} //This is important field to render the next data
                 next={fetchMoreData}
                 hasMore={hasMore}
-
-                >
+            >
                 <div className='pokemon-cards__wrapper'>
-                    {loading ? <LoadingComponent /> : <PokemonCardComponent pokemons={pokemons} />}
+                    {loading ? <LoadingSpinner /> : <PokemonCard pokemons={pokemons} />}
                 </div>
             </InfiniteScroll>
 

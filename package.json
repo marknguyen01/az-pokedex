@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.12",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
-    "eslint": "^8.37.0",
     "mongoose": "^7.1.0",
     "next": "^13.4.1",
     "react": "^18.2.0",
@@ -23,11 +20,13 @@
     "wretch": "^2.5.1"
   },
   "devDependencies": {
+    "@types/ms": "0.7.31",
     "@types/node": "^20.1.1",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.40.0",
     "eslint-config-next": "^13.4.1",
-    "eslint-import-resolver-typescript": "^3.5.4",
-    "eslint-plugin-import": "^2.27.5",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "tailwindcss": "^3.2.7"

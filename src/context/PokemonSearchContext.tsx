@@ -10,10 +10,15 @@ interface State {
     loading: boolean,
 }
 
-interface Action {
-    type: string,
-    payload: string,
-}
+type Action = 
+    | { type: 'FETCH' }
+    | { type: 'QUERY', payload: string }
+    | {type: 'ADD_TYPE', payload: string}
+    | {type: 'ADD_WEAKNESS', payload: string}
+    | {type: 'RESET'}
+    | {type: 'PAGINATE', payload: number}
+    | {type: 'SUCCESS'}
+    | {type: 'ERROR'}
 
 const INITIAL_STATE:State = {
     query: "",
@@ -34,7 +39,7 @@ const PokemonSearchReducer = (state: State, action: Action) => {
         case "RESET":
             return {...state, query: "", type: "", weakness: ""};
         case "PAGINATE":
-            return {...state, offset: parseInt(action.payload)};
+            return {...state, offset: Number(action.payload)};
 
 
         case "FETCH":

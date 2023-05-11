@@ -4,7 +4,7 @@ export enum FetchAPIRequest {
     POST= "POST",
 }
 
-export default async function fetchAPI<T>(url:string, method:FetchAPIRequest, body?:any): Promise<T> {
+export default async function fetchAPI<T = any>(url:string, method:FetchAPIRequest, body?:any): Promise<T> {
 
     if(FetchAPIRequest[method]) {
         const server = (!process.env.SERVER_URL || process.env.NODE_ENV !== 'production') ? 'http://localhost:3000' : process.env.SERVER_URL;

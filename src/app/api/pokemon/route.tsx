@@ -64,38 +64,40 @@ export async function GET(req: NextRequest) {
                 });
             }
 
+
             if(weaknessParam) {
-                await fetchAPI<IType[]>('api/type', FetchAPIRequest.GET).then((data:IType[]) => {
-                    if(data && data.length > 0) {
-                        const currentDmg = data?.find((type:IType) => {
-                            return type.name === weaknessParam.toLowerCase();
-                        })?.damage_relations;
-                        
-                        if(currentDmg) {
-                            const doubleDmgTo = currentDmg.double_damage_to.map(type => type.name);
-                            const halfDmgTo = currentDmg.half_damage_to.map(type => type.name);
-                            const noDmgTo = currentDmg.no_damage_to.map(type => type.name);
+                const results = await fetchAPI('/api/type', FetchAPIRequest.GET);
+                const types:IType[] = results.results;
 
-                            finalResults = finalResults.filter((pokemon:any) => {
-                                let dmgMultiplier = 1;
+                if(types.length > 0) {
+                    const currentDmg = types?.find((type:IType) => {
+                        return type.name === weaknessParam.toLowerCase();
+                    })?.damage_relations;
+                    
+                    if(currentDmg) {
+                        const doubleDmgTo = currentDmg.double_damage_to.map(type => type.name);
+                        const halfDmgTo = currentDmg.half_damage_to.map(type => type.name);
+                        const noDmgTo = currentDmg.no_damage_to.map(type => type.name);
 
-                                pokemon.types.forEach((type:IType) => {
-                                    const currentType = type.name;
-                                    if(doubleDmgTo.includes(currentType)) {
-                                        dmgMultiplier = dmgMultiplier * 2;
-                                    }
-                                    if(halfDmgTo.includes(currentType)) {
-                                        dmgMultiplier = dmgMultiplier * 0.5;
-                                    }
-                                    if(noDmgTo.includes(currentType)) {
-                                        dmgMultiplier = dmgMultiplier * 0;
-                                    }
-                                });
-                                return dmgMultiplier >= 2;
+                        finalResults = finalResults.filter((pokemon:any) => {
+                            let dmgMultiplier = 1;
+
+                            pokemon.types.forEach((type:IType) => {
+                                const currentType = type.name;
+                                if(doubleDmgTo.includes(currentType)) {
+                                    dmgMultiplier = dmgMultiplier * 2;
+                                }
+                                if(halfDmgTo.includes(currentType)) {
+                                    dmgMultiplier = dmgMultiplier * 0.5;
+                                }
+                                if(noDmgTo.includes(currentType)) {
+                                    dmgMultiplier = dmgMultiplier * 0;
+                                }
                             });
-                        }
+                            return dmgMultiplier >= 2;
+                        });
                     }
-                });
+                }
             }
             console.log(finalResults.slice(0,3));
             return createSuccessResponse(finalResults);

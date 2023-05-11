@@ -1,6 +1,6 @@
 import fetchAPI, { FetchAPIRequest } from "../../../lib/api";
 import { IPokemon } from "../../../models/Pokemon";
-import PokemonPage from "../../../ui/pages/pokemon-page";
+import PokemonPage from "../../../ui/pages/PokemonPage";
 
 async function getPokemon(id:string):Promise<any> {
     return await fetchAPI(`/api/pokemon/${id}`, FetchAPIRequest.GET);

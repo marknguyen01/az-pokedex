@@ -1,5 +1,5 @@
 import { PokemonSearchContextProvider } from '../context/PokemonSearchContext';
-import FilterPokemon from '../components/FilterPokemon';
+import FilterPokemon from '../ui/FilterPokemon';
 import SearchBar from '../components/SearchBar';
 import PokemonCards from '../components/PokemonCards';
 import fetchAPI, { FetchAPIRequest } from "../lib/api";

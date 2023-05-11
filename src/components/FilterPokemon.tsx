@@ -12,9 +12,6 @@ export default function FilterPokemon({types}: {
     const { dispatch, state } = useContext(PokemonSearchContext);
     const { type, weakness } = state;
 
-    const typeData = types;
-
-
     return (
         <div className="filter">
             <div className='filter-wrapper'>
@@ -27,7 +24,7 @@ export default function FilterPokemon({types}: {
                         className={`filter-dropdown__option ${type === '' ? 'active--all' : ''}`}
                         onClick={() => {dispatch({type: "ADD_TYPE", payload: ""})}}
                     >All</div>
-                    {typeData.map((currentType) => (
+                    {types.map((currentType) => (
                         <div 
                         className={`filter-dropdown__option ${type == currentType.name ? 'active--' + currentType.name : ''}`}  
                         key={currentType._id}
@@ -46,7 +43,7 @@ export default function FilterPokemon({types}: {
                         className={`filter-dropdown__option ${weakness === '' ? 'active--all' : ''}`}
                         onClick={() => {dispatch({type: "ADD_WEAKNESS", payload: ""})}}
                     >None</div>
-                    {typeData.map((type) => (
+                    {types.map((type) => (
                         <div 
                         className={`filter-dropdown__option ${weakness == type.name ? 'active--' + weakness : ''}`}  
                         key={type._id}

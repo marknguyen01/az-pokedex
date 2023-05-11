@@ -7,7 +7,7 @@ export enum FetchAPIRequest {
 export default async function fetchAPI<T>(url:string, method:FetchAPIRequest, body?:any): Promise<T> {
 
     if(FetchAPIRequest[method]) {
-        const server = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : process.env.SERVER_URL;
+        const server = (!process.env.SERVER_URL || process.env.NODE_ENV !== 'production') ? 'http://localhost:3000' : process.env.SERVER_URL;
 
         return await fetch(`${server}/${url}`, {
             body: body,

@@ -7,7 +7,7 @@ export default function SearchBar() {
     const { dispatch } = useContext(PokemonSearchContext);
     const [searchInput, setSearchInput] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch({type: 'QUERY', payload: searchInput});
     }

@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import moongooseClient from '../../../../lib/mongooseClient';
 import Pokemon from '../../../../models/Pokemon';
-import Type, {IType} from '../../../../models/Type';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     // The intention is to run this test env where you have more resources to scrap the data
@@ -28,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }}
         });
     
-        Pokemon.bulkWrite(bulkOps).then(result => {
+        Pokemon.bulkWrite(bulkOps).then(() => {
             res.json({
                 success: true,
             })

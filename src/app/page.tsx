@@ -5,14 +5,14 @@ import PokemonCards from '../components/PokemonCards';
 import fetchAPI, { FetchAPIRequest } from "../lib/api";
 import { IType } from "../models/Type";
 
-export async function getTypes():Promise<any> {
+async function getTypes():Promise<any> {
     return await fetchAPI('api/type', FetchAPIRequest.GET);
 }
 
 
 export default async function Page() {
     const results = await getTypes();
-    const types:IType = results.results;
+    const types:IType[] = results.results;
 
     return (
         <PokemonSearchContextProvider>

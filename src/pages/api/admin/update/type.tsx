@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }));
 
-        Type.bulkWrite(bulkOps).then(result => {
+        Type.bulkWrite(bulkOps).then(() => {
             res.json({
                 success: true,
             })

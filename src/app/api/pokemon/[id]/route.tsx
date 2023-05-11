@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import mongooseClient from '../../../../lib/mongooseClient';
 import Pokemon from '../../../../models/Pokemon';
 import { ErrorMessage, createErrorResponse, createSuccessResponse } from '../../../../lib/apiResponseUtil';

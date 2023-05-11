@@ -4,8 +4,9 @@ import React, {useContext} from 'react';
 import Image from 'next/image'
 import { PokemonSearchContext } from '../context/PokemonSearchContext';
 import { IPokemon } from '../models/Pokemon';
+import { IType } from '../models/Type';
 
-function createTypeBackground(types) {
+function createTypeBackground(types:IType[]) {
     const typesMap = new Map([
         ["normal", "#A8A77A"],
         ["fire", "#EE8130"],
@@ -34,34 +35,6 @@ function createTypeBackground(types) {
     }
 }
 
-
-
-function decodeStatName(statName) {
-    const statNameMap = new Map([
-        ["hp", "hp"],
-        ["attack", "atk"],
-        ["defense", "def"],
-        ["special-attack", "spa"],
-        ["special-defense", "spd"],
-        ["speed", "spe"],
-    ]);
-
-    return statNameMap.get(statName);
-}
-
-function changeStatOrder(stat) {
-    const statOrderMap = new Map([
-        ["hp", 1],
-        ["attack", 3],
-        ["defense", 4],
-        ["special-attack", 5],
-        ["special-defense", 6],
-        ["speed", 2],
-    ]);
-
-    return 'lg:order-' + statOrderMap.get(stat).toString();
-}
-
 export default function PokemonCard({pokemons}: {
     pokemons: IPokemon[]
 }) {
@@ -73,7 +46,7 @@ export default function PokemonCard({pokemons}: {
                 <div className="pokemon-card" key={pokemon._id}>
                     <figure className='pokemon-card__hero' style={createTypeBackground(pokemon.types)}>
                         <a className='pokemon-card__img' href={`/pokemon/${pokemon.name}`}>
-                            { process.env.POKEMON_IMG_LAZY_LOAD_LIMIT && index < process.env.POKEMON_IMG_LAZY_LOAD_LIMIT ?
+                            { Number(process.env.POKEMON_IMG_LAZY_LOAD_LIMIT) && index < Number(process.env.POKEMON_IMG_LAZY_LOAD_LIMIT) ?
                                 <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon._id}.png`} 
                                 alt={pokemon.name} width={128} height={128}
                                 placeholder="blur"
@@ -87,7 +60,7 @@ export default function PokemonCard({pokemons}: {
                                 <div 
                                     key={index}
                                     className={`pokemon-card__type pokemon-card_type--${type.name} ${index == 0 ? 'left-1' : 'right-1'}`}
-                                    onClick={(e) => dispatch({type: "ADD_TYPE", payload: type.name})}
+                                    onClick={() => dispatch({type: "ADD_TYPE", payload: type.name})}
                                 >{ type.name }</div>
                             )}
                         </div>

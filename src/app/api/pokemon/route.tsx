@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import Pokemon, {IPokemon} from '../../../models/Pokemon';
+import { NextRequest } from 'next/server';
+import Pokemon from '../../../models/Pokemon';
 import {IType} from '../../../models/Type';
 import fetchAPI, { FetchAPIRequest } from '../../../lib/api';
 import moongooseClient from '../../../lib/mongooseClient';

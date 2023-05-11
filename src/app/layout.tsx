@@ -2,6 +2,7 @@ import '../css/style.scss'
 
 import  { Metadata } from 'next';
 import { GlobalNavbar } from '../components/GlobalNavbar';
+import React from 'react';
 
 export const metadata: Metadata = {
     title: {

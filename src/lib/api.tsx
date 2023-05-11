@@ -15,7 +15,7 @@ export default async function fetchAPI<T>(url:string, method:FetchAPIRequest, bo
         })
         .then(response => {
             if (!response.ok) {
-                return response.text().then(text => {
+                return response.text().then(() => {
                     throw new Error('Failed to make a request to API: ' + url);
                 })
             }

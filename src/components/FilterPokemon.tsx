@@ -2,8 +2,11 @@
 
 import React, { useContext, useState } from "react";
 import { PokemonSearchContext } from '../context/PokemonSearchContext';
+import { IType } from '../models/Type';
 
-export default function FilterPokemon({types}) {
+export default function FilterPokemon({types}: {
+    types: IType[]
+}) {
     const [toggleType, setToggleType] = useState(false);
     const [toggleWeakness, setToggleWeakness] = useState(false);
     const { dispatch, state } = useContext(PokemonSearchContext);
@@ -22,13 +25,13 @@ export default function FilterPokemon({types}) {
                 <div className={`filter-dropdown ${toggleType ? 'active--types' : ''}`}>
                     <div 
                         className={`filter-dropdown__option ${type === '' ? 'active--all' : ''}`}
-                        onClick={(e) => {dispatch({type: "ADD_TYPE", payload: ""})}}
+                        onClick={() => {dispatch({type: "ADD_TYPE", payload: ""})}}
                     >All</div>
                     {typeData.map((currentType) => (
                         <div 
                         className={`filter-dropdown__option ${type == currentType.name ? 'active--' + currentType.name : ''}`}  
                         key={currentType._id}
-                        onClick={(e) => {dispatch({type: "ADD_TYPE", payload: currentType.name})}}
+                        onClick={() => {dispatch({type: "ADD_TYPE", payload: currentType.name})}}
                         >{currentType.name}</div>
                     ))}
                 </div>
@@ -41,19 +44,19 @@ export default function FilterPokemon({types}) {
                 <div className={`filter-dropdown ${toggleWeakness ? 'active--types' : ''}`}>
                     <div 
                         className={`filter-dropdown__option ${weakness === '' ? 'active--all' : ''}`}
-                        onClick={(e) => {dispatch({type: "ADD_WEAKNESS", payload: ""})}}
+                        onClick={() => {dispatch({type: "ADD_WEAKNESS", payload: ""})}}
                     >None</div>
                     {typeData.map((type) => (
                         <div 
                         className={`filter-dropdown__option ${weakness == type.name ? 'active--' + weakness : ''}`}  
                         key={type._id}
-                        onClick={(e) => {dispatch({type: "ADD_WEAKNESS", payload: type.name})}}
+                        onClick={() => {dispatch({type: "ADD_WEAKNESS", payload: type.name})}}
                         >{type.name}</div>
                     ))}
                 </div>
             </div>
 
-            <div className="filter__select-reset" onClick={(e) => {dispatch({type: "RESET"})}}> 
+            <div className="filter__select-reset" onClick={() => {dispatch({type: "RESET"})}}> 
                 Reset
             </div>
         </div>

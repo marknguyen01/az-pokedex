@@ -9,24 +9,16 @@ export default async function fetchAPI<T>(url:string, method:FetchAPIRequest, bo
     if(FetchAPIRequest[method]) {
         const server = (!process.env.SERVER_URL || process.env.NODE_ENV !== 'production') ? 'http://localhost:3000' : process.env.SERVER_URL;
 
-        return await fetch(`${server}/${url}`, {
+        const res = await fetch(`${server}/${url}`, {
             body: body,
             method: method,
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(() => {
-                    throw new Error('Failed to make a request to API: ' + url);
-                })
-            }
-            return response.json() as Promise<T>
-        })
-        .then((data) => {
-            return data
-        })
-        .catch((error: Error) => {
-            throw error
-        })
+        });
+
+        if(!res.ok) {
+            throw new Error('Failed to make a request to API: ' + url);
+        }
+
+        return res.json() as Promise<T>;
     }
     else {
         throw new Error("fetchAPI post method is not valid");

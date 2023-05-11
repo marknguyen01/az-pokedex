@@ -6,7 +6,7 @@ import fetchAPI, { FetchAPIRequest } from "../lib/api";
 import { IType } from "../models/Type";
 
 async function getTypes():Promise<any> {
-    return await fetchAPI(`api/type`, FetchAPIRequest.GET);
+    return await fetchAPI('/api/type', FetchAPIRequest.GET);
 }
 
 export default async function Page() {

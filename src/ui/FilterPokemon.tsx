@@ -24,13 +24,13 @@ export default function FilterPokemon({types}: {
                         className={`filter-dropdown__option ${type === '' ? 'active--all' : ''}`}
                         onClick={() => {dispatch({type: "ADD_TYPE", payload: ""})}}
                     >All</div>
-                    {types.map((currentType) => (
+                    {types && types.length > 0 ? types.map((currentType) => (
                         <div 
                         className={`filter-dropdown__option ${type == currentType.name ? 'active--' + currentType.name : ''}`}  
                         key={currentType._id}
                         onClick={() => {dispatch({type: "ADD_TYPE", payload: currentType.name})}}
                         >{currentType.name}</div>
-                    ))}
+                    )): ""}
                 </div>
             </div>
             <div className='filter-wrapper'>
@@ -43,13 +43,13 @@ export default function FilterPokemon({types}: {
                         className={`filter-dropdown__option ${weakness === '' ? 'active--all' : ''}`}
                         onClick={() => {dispatch({type: "ADD_WEAKNESS", payload: ""})}}
                     >None</div>
-                    {types.map((type) => (
+                    {types && types.length > 0 ? types.map((type) => (
                         <div 
                         className={`filter-dropdown__option ${weakness == type.name ? 'active--' + weakness : ''}`}  
                         key={type._id}
                         onClick={() => {dispatch({type: "ADD_WEAKNESS", payload: type.name})}}
                         >{type.name}</div>
-                    ))}
+                    )) : ""}
                 </div>
             </div>
 

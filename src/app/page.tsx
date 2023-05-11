@@ -18,7 +18,7 @@ export default async function Page() {
     return (
         <PokemonSearchContextProvider>
             <SearchBar></SearchBar>
-            {/* <FilterPokemon types={types}></FilterPokemon> */}
+            <FilterPokemon types={types}></FilterPokemon>
             <PokemonCards></PokemonCards>
         </PokemonSearchContextProvider>
     )

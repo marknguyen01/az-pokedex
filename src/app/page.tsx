@@ -10,10 +10,10 @@ async function getTypes():Promise<any> {
 }
 
 export default async function Page() {
-    const results = await getTypes();
-    const types:IType[] = results.results;
+    const res = await getTypes();
+    const types:IType[] = res.results;
 
-    console.log(types);
+    console.log(res);
 
     return (
         <PokemonSearchContextProvider>

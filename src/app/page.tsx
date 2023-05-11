@@ -13,10 +13,12 @@ export default async function Page() {
     const results = await getTypes();
     const types:IType[] = results.results;
 
+    console.log(types);
+
     return (
         <PokemonSearchContextProvider>
             <SearchBar></SearchBar>
-            <FilterPokemon types={types}></FilterPokemon>
+            {/* <FilterPokemon types={types}></FilterPokemon> */}
             <PokemonCards></PokemonCards>
         </PokemonSearchContextProvider>
     )

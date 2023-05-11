@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
 import fetchAPI, { FetchAPIRequest } from "../../../lib/api";
 import { IPokemon } from "../../../models/Pokemon";
+import PokemonPage from "../../../ui/pages/pokemon-page";
 
 async function getPokemon(id:string):Promise<any> {
     return await fetchAPI(`api/pokemon/${id}`, FetchAPIRequest.GET);
@@ -18,9 +18,7 @@ export default async function Page({
     console.log(pokemon);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            {pokemon.name}
-        </Suspense>
+        <PokemonPage pokemon={pokemon} />
     )
 
 }
